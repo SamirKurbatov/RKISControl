@@ -20,9 +20,21 @@ namespace RKISControl.Views
     /// </summary>
     public partial class TenantsPageView : Page
     {
+        private readonly Frame frame;
+
+        public TenantsPageView(Frame frame)
+        {
+            this.frame = frame;
+        }
+
         public TenantsPageView()
         {
             InitializeComponent();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            frame.Navigate(new MenuPageView(frame));
         }
     }
 }

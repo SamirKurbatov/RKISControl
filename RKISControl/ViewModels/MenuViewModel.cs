@@ -4,7 +4,7 @@ namespace RKISControl.ViewModels
 {
     public class MenuViewModel : BaseViewModel
     {
-        private string role;
+        private string role = "Администратор";
         public string Role
         {
             get => role;

@@ -22,34 +22,15 @@ namespace RKISControl.Views
     /// </summary>
     public partial class LoginPageView : Page
     {
-        private readonly Frame frame;
+        private readonly LoginViewModel loginViewModel;
 
-        private LoginViewModel loginViewModel;
-
-        private MenuViewModel menuViewModel;
-
-        public LoginPageView(Frame frame, MenuViewModel menuViewModel, LoginViewModel loginViewModel)
+        public LoginPageView(LoginViewModel loginViewModel)
         {
             InitializeComponent();
-            this.menuViewModel = menuViewModel;
-            this.frame = frame;
+
             this.loginViewModel = loginViewModel;
-            DataContext = loginViewModel;
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var worker = loginViewModel?.Worker;
-
-            if (worker != null && worker.Role == "Администратор")
-            {
-                menuViewModel.Role = "Администратор";
-
-                frame.Navigate(new MenuPageView(frame)
-                {
-                    DataContext = menuViewModel
-                });
-            }
+            DataContext = this.loginViewModel;
         }
     }
 }

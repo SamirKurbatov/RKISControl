@@ -20,9 +20,21 @@ namespace RKISControl.Views
     /// </summary>
     public partial class MallPageView : Page
     {
+        private readonly Frame frame;
+
+        public MallPageView(Frame frame)
+        {
+            this.frame = frame;
+        }
+
         public MallPageView()
         {
             InitializeComponent();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            frame.Navigate(new MenuPageView(frame));
         }
     }
 }

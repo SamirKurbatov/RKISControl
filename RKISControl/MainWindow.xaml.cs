@@ -24,13 +24,15 @@ namespace RKISControl
     public partial class MainWindow : Window
     {
         private readonly RentMallDataContext db = new RentMallDataContext();
+
         public MainWindow()
         {
             InitializeComponent();
             var menuViewModel = new MenuViewModel();
             var workerViewModel = new WorkerViewModel(db);
+            var loginViewModel = new LoginViewModel(frame, workerViewModel, menuViewModel);
 
-            frame.Navigate(new LoginPageView(frame, menuViewModel, new LoginViewModel(workerViewModel, menuViewModel)));
+            frame.Navigate(new LoginPageView(loginViewModel));
         }
     }
 }

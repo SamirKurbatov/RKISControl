@@ -1,6 +1,4 @@
-﻿using RKISControl.Data;
-using RKISControl.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +16,25 @@ using System.Windows.Shapes;
 namespace RKISControl.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MenuPageView.xaml
+    /// Логика взаимодействия для ManagerPageMenuView.xaml
     /// </summary>
-    public partial class MenuPageView : Page
+    public partial class ManagerPageMenuView : Page
     {
         private readonly Frame frame;
 
-        public MenuPageView(Frame frame)
+        public ManagerPageMenuView(Frame frame)
         {
-            InitializeComponent();
             this.frame = frame;
         }
 
-        private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
+        public ManagerPageMenuView()
         {
-            frame.Navigate(new TenantsPageView(frame));
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            frame.Navigate(new MallPageView(frame));
         }
     }
 }

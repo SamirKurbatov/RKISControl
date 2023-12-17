@@ -106,6 +106,9 @@
     <Compile Include="Views\MallPageView.xaml.cs">
       <DependentUpon>MallPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ManagerPageMenuView.xaml.cs">
+      <DependentUpon>ManagerPageMenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuPageView.xaml.cs">
       <DependentUpon>MenuPageView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
     <Page Include="Views\MallPageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ManagerPageMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuPageView.xaml">
       <SubType>Designer</SubType>
