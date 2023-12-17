@@ -56,7 +56,7 @@ namespace RKISControl.ViewModels
         {
             var worker = workerViewModel.GetWorker(Login, Password);
 
-            if (worker == null || worker.Role == "Администратор")
+            if (worker != null || worker.Role == "Администратор")
             {
                 menuViewModel.Role = "Администратор";
                 frame.Navigate(new MenuPageView(frame)
@@ -65,9 +65,18 @@ namespace RKISControl.ViewModels
                 });
             }
 
-            else if (worker == null || (worker.Role == "Менеджер А" || worker.Role == "Менеджер С"))
+            else if (worker != null || worker.Role == "Менеджер А")
             {
                 menuViewModel.Role = "Менеджер A";
+                frame.Navigate(new ManagerPageMenuView(frame)
+                {
+                    DataContext = menuViewModel
+                });
+            }
+
+            else if (worker != null || worker.Role == "Менеджер C")
+            {
+                menuViewModel.Role = "Менеджер С";
                 frame.Navigate(new ManagerPageMenuView(frame)
                 {
                     DataContext = menuViewModel
