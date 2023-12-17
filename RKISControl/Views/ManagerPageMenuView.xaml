@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:RKISControl.Views"
+      xmlns:local="clr-namespace:RKISControl.Views" xmlns:viewmodels="clr-namespace:RKISControl.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MenuViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ManagerPageMenuView">
@@ -24,7 +24,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Меню" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
-                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0"/>
+                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0" Click="Button_Click_1"/>
             </Grid>
 
             <Grid Grid.Row="1" Background="White" Margin="5">
@@ -35,7 +35,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Добро пожаловать" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
-                    <TextBlock Text="ФИО" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
+                    <TextBlock Text="{Binding FullName}" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
                 </StackPanel>
                 <Button Grid.Column="1" Style="{StaticResource BlueRoundedButton}" Content="Показать ТЦ"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Height="50" Click="Button_Click"/>

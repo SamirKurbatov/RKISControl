@@ -32,5 +32,15 @@ namespace RKISControl.Views
 
             DataContext = this.loginViewModel;
         }
+
+        private void password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                string newPassword = passwordBox.Password;
+                loginViewModel.Password = newPassword;
+            }
+        }
     }
 }

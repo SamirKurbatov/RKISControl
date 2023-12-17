@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKISControl.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,12 @@ namespace RKISControl.Views
     {
         private readonly Frame frame;
 
-        public MallPageView(Frame frame)
+        private LoginViewModel viewModel;
+
+        public MallPageView(Frame frame, LoginViewModel viewModel)
         {
             this.frame = frame;
+            this.viewModel = viewModel;
         }
 
         public MallPageView()
@@ -34,7 +38,7 @@ namespace RKISControl.Views
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MenuPageView(frame));
+            frame.Navigate(new MenuPageView(frame, viewModel));
         }
     }
 }

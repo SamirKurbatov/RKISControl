@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKISControl.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,19 +23,24 @@ namespace RKISControl.Views
     {
         private readonly Frame frame;
 
-        public ManagerPageMenuView(Frame frame)
-        {
-            this.frame = frame;
-        }
+        private readonly LoginViewModel loginViewModel;
 
-        public ManagerPageMenuView()
+        public ManagerPageMenuView(Frame frame, LoginViewModel loginViewModel)
         {
             InitializeComponent();
+            this.frame = frame;
+            this.loginViewModel = loginViewModel;
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MallPageView(frame));
+            frame.Navigate(new MallPageView(frame, loginViewModel));
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            frame.Navigate(new LoginPageView(loginViewModel));
         }
     }
 }

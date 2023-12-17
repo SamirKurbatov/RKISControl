@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKISControl.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,20 +22,18 @@ namespace RKISControl.Views
     public partial class TenantsPageView : Page
     {
         private readonly Frame frame;
+        private readonly LoginViewModel viewModel;
 
-        public TenantsPageView(Frame frame)
-        {
-            this.frame = frame;
-        }
-
-        public TenantsPageView()
+        public TenantsPageView(Frame frame, LoginViewModel viewModel = null)
         {
             InitializeComponent();
+            this.frame = frame;
+            this.viewModel = viewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MenuPageView(frame));
+            frame.Navigate(new MenuPageView(frame, viewModel));
         }
     }
 }

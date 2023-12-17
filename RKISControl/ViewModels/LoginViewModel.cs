@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Command;
 using RKISControl.Data;
 using RKISControl.Views;
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,17 +17,21 @@ namespace RKISControl.ViewModels
 
         private readonly MenuViewModel menuViewModel;
 
-        public LoginViewModel(Frame frame, WorkerViewModel workerViewModel, MenuViewModel menuViewModel)
+        public LoginViewModel(Frame frame)
         {
             this.frame = frame;
-            this.workerViewModel = workerViewModel ?? throw new ArgumentNullException(nameof(workerViewModel));
-            this.menuViewModel = menuViewModel ?? throw new ArgumentNullException(nameof(menuViewModel));
+
+            var db = new RentMallDataContext();
+
+            this.workerViewModel = new WorkerViewModel(db);
+
+            this.menuViewModel = new MenuViewModel();
 
             LoginCommand = new RelayCommand(GetLogin);
         }
 
 
-        private string login = "sdasadsa";
+        private string login;
         public string Login
         {
             get => login;
@@ -39,7 +42,7 @@ namespace RKISControl.ViewModels
             }
         }
 
-        private string password = "dsadsadasdsadsadsada";
+        private string password;
         public string Password
         {
             get => password;
@@ -56,28 +59,35 @@ namespace RKISControl.ViewModels
         {
             var worker = workerViewModel.GetWorker(Login, Password);
 
-            if (worker != null || worker.Role == "Администратор")
+            if (worker != null && worker.Role == "Администратор")
             {
+                SetFullNameWorker(worker);
+
                 menuViewModel.Role = "Администратор";
-                frame.Navigate(new MenuPageView(frame)
+                frame.Navigate(new MenuPageView(frame, this)
                 {
                     DataContext = menuViewModel
                 });
             }
 
-            else if (worker != null || worker.Role == "Менеджер А")
+            else if (worker != null && worker.Role == "Менеджер А")
             {
-                menuViewModel.Role = "Менеджер A";
-                frame.Navigate(new ManagerPageMenuView(frame)
+
+                SetFullNameWorker(worker);
+
+                menuViewModel.Role = "Менеджер А";
+                frame.Navigate(new ManagerPageMenuView(frame, this)
                 {
                     DataContext = menuViewModel
                 });
-            }
 
-            else if (worker != null || worker.Role == "Менеджер C")
+            }
+            else if (worker != null && worker.Role == "Менеджер С")
             {
+                SetFullNameWorker(worker);
+
                 menuViewModel.Role = "Менеджер С";
-                frame.Navigate(new ManagerPageMenuView(frame)
+                frame.Navigate(new ManagerPageMenuView(frame, this)
                 {
                     DataContext = menuViewModel
                 });
@@ -88,20 +98,12 @@ namespace RKISControl.ViewModels
                 MessageBox.Show("Пользователь удален! ");
             }
         }
-    }
 
-    public class WorkerViewModel
-    {
-        private RentMallDataContext db;
-
-        public WorkerViewModel(RentMallDataContext db)
+        private void SetFullNameWorker(Worker worker)
         {
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
-        }
-
-        public Worker GetWorker(string login, string password)
-        {
-            return db.Workers.FirstOrDefault(w => w.Password == password && w.Login == login);
+            menuViewModel.FirstName = worker.First_Name;
+            menuViewModel.SecondName = worker.Second_Name;
+            menuViewModel.LastName = worker.Middle_Name;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace RKISControl.ViewModels
 {
     public class MenuViewModel : BaseViewModel
     {
-        private string role = "Администратор";
+        private string role;
         public string Role
         {
             get => role;
@@ -15,10 +15,39 @@ namespace RKISControl.ViewModels
             }
         }
 
-        public string FirstName { get; set; }
+        private string firstName;
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                firstName = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string SecondName { get; set; }
+        private string secondName;
+        public string SecondName
+        {
+            get => secondName;
+            set
+            {
+                secondName = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string LastName { get; set; }
+        private string lastName;
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                lastName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string FullName => $"{FirstName} {SecondName} {LastName}";
     }
 }
