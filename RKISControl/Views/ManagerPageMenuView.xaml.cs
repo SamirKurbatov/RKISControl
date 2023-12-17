@@ -32,7 +32,6 @@ namespace RKISControl.Views
             this.loginViewModel = loginViewModel;
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             frame.Navigate(new MallPageView(frame, loginViewModel));

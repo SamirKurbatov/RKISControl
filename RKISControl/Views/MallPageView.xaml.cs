@@ -27,18 +27,14 @@ namespace RKISControl.Views
 
         public MallPageView(Frame frame, LoginViewModel viewModel)
         {
+            InitializeComponent();
             this.frame = frame;
             this.viewModel = viewModel;
         }
 
-        public MallPageView()
-        {
-            InitializeComponent();
-        }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MenuPageView(frame, viewModel));
+            frame.Navigate(new ManagerPageMenuView(frame, viewModel));
         }
     }
 }

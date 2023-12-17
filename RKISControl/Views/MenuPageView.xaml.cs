@@ -35,7 +35,7 @@ namespace RKISControl.Views
 
         private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new TenantsPageView(frame));
+            frame.Navigate(new TenantsPageView(frame, loginViewModel));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

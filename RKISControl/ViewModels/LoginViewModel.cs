@@ -15,13 +15,13 @@ namespace RKISControl.ViewModels
 
         private readonly WorkerViewModel workerViewModel;
 
+        private readonly RentMallDataContext db = new RentMallDataContext();
+
         private readonly MenuViewModel menuViewModel;
 
         public LoginViewModel(Frame frame)
         {
             this.frame = frame;
-
-            var db = new RentMallDataContext();
 
             this.workerViewModel = new WorkerViewModel(db);
 
@@ -72,7 +72,6 @@ namespace RKISControl.ViewModels
 
             else if (worker != null && worker.Role == "Менеджер А")
             {
-
                 SetFullNameWorker(worker);
 
                 menuViewModel.Role = "Менеджер А";

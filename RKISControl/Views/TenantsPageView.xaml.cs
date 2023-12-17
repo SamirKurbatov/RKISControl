@@ -24,7 +24,7 @@ namespace RKISControl.Views
         private readonly Frame frame;
         private readonly LoginViewModel viewModel;
 
-        public TenantsPageView(Frame frame, LoginViewModel viewModel = null)
+        public TenantsPageView(Frame frame, LoginViewModel viewModel)
         {
             InitializeComponent();
             this.frame = frame;
