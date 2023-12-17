@@ -50,10 +50,6 @@ namespace RKISControl.Views
                     DataContext = menuViewModel
                 });
             }
-            else
-            {
-                MessageBox.Show("Еблан");
-            }
         }
     }
 }

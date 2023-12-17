@@ -17,7 +17,7 @@ namespace RKISControl.ViewModels
             this.menuViewModel = menuViewModel ?? throw new ArgumentNullException(nameof(menuViewModel));
         }
 
-        private string login;
+        private string login = "sdasadsa";
         public string Login
         {
             get => login;
@@ -28,7 +28,7 @@ namespace RKISControl.ViewModels
             }
         }
 
-        private string password;
+        private string password = "dsadsadasdsadsadsada";
         public string Password
         {
             get => password;
