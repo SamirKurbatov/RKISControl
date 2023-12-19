@@ -1,20 +1,9 @@
-﻿using RKISControl.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RKISControl.Data;
 using RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RKISControl
 {
@@ -23,19 +12,31 @@ namespace RKISControl
     /// </summary>
     public partial class MainWindow : Window
     {
-        private RentMallDataContext db = new RentMallDataContext();
+        private IServiceCollection services = new ServiceCollection();
+
+        private IServiceProvider serviceProvider;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            var mallPageViewModel = new MallPageViewModel(frame, db);
-            var workerViewModel = new WorkerViewModel(db);
-            var menuViewModel = new MenuViewModel();
+            RegisterViewModels();
 
-            var loginViewModel = new LoginViewModel(frame, mallPageViewModel, workerViewModel, menuViewModel);
+            serviceProvider = services.BuildServiceProvider();
 
-            frame.Navigate(new LoginPageView(loginViewModel));
+            var viewModelLocator = new ViewModelLocator(frame, serviceProvider);
+
+            frame.Navigate(new LoginPageView(viewModelLocator));
+        }
+
+        private void RegisterViewModels()
+        {
+            services.AddSingleton<WorkerViewModel>();
+            services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<MenuViewModel>();
+            services.AddSingleton<MallPageViewModel>();
+            services.AddSingleton<RentMallDataContext>();
+            services.AddSingleton<AddMallPageViewModel>();
         }
     }
 }

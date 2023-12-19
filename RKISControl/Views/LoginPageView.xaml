@@ -8,14 +8,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPageView">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20" Margin="0 5" Text="Авторизация" Foreground="Black"/>
+        <StackPanel Background="#94bdff">
+            <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20" Margin="0 15" Text="Авторизация" Foreground="Black"/>
+        </StackPanel>
 
-        <Grid Grid.Row="1" VerticalAlignment="Center">
+        <Grid Grid.Row="1" VerticalAlignment="Center" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -29,8 +31,9 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock FontSize="15" VerticalAlignment="Center" Grid.Column="0" Text="Логин" Margin="0 0 10 0"/>
-                <TextBox Style="{StaticResource RoundedTextBox}" Text="{Binding Login}" Grid.Column="1" Margin="0 0 0 5"/>
+
+                <TextBlock FontSize="15" VerticalAlignment="Center" Grid.Column="0" Text="Логин" Margin="30 0"/>
+                <TextBox Style="{StaticResource RoundedTextBox}" Text="{Binding Login}" Grid.Column="1" Margin="20 5" />
             </Grid>
 
             <Grid Grid.Row="2" VerticalAlignment="Center">
@@ -38,13 +41,14 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" FontSize="15"  Grid.Column="0" Text="Пароль"/>
-                <PasswordBox PasswordChanged="password_PasswordChanged" x:Name="password" Style="{StaticResource RoundedPasswordBox}" Grid.Column="1" Margin="0 0 0 5"/>
+
+                <TextBlock VerticalAlignment="Center" FontSize="15"  Grid.Column="0" Text="Пароль" Margin="25 0"/>
+                <PasswordBox PasswordChanged="password_PasswordChanged" x:Name="password" 
+                    Style="{StaticResource RoundedPasswordBox}"  Grid.Column="1" Margin="20 5"/>
             </Grid>
 
-            <StackPanel Grid.Row="3">
-                <Button Style="{StaticResource BlueRoundedButton}" Cursor="Hand" Content="Войти" Height="30" Margin="0 5 0 0" Command="{Binding LoginCommand}"/>
-            </StackPanel>
+            <Button Grid.Row="3" Style="{StaticResource BlueRoundedButton}" HorizontalAlignment="Center" Width="100" Cursor="Hand" Content="Войти" Height="40" Margin="0 5 0 0" 
+                        Command="{Binding LoginCommand}"/>
         </Grid>
     </Grid>
 </Page>

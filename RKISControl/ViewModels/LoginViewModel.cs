@@ -13,19 +13,15 @@ namespace RKISControl.ViewModels
     {
         private readonly Frame frame;
 
-        private readonly WorkerViewModel workerViewModel;
+        private readonly RentMallDataContext db;
 
+        private readonly ViewModelLocator viewModelLocator;
 
-        private readonly MenuViewModel menuViewModel;
-
-        private readonly MallPageViewModel mallPageViewModel;
-
-        public LoginViewModel(Frame frame, MallPageViewModel mallPageViewModel, WorkerViewModel workerViewModel, MenuViewModel menuViewModel)
+        public LoginViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator)
         {
             this.frame = frame;
-            this.mallPageViewModel = mallPageViewModel;
-            this.workerViewModel = workerViewModel;
-            this.menuViewModel = menuViewModel;
+            this.db = db;
+            this.viewModelLocator = viewModelLocator;
 
             LoginCommand = new RelayCommand(GetLogin);
         }
@@ -57,16 +53,16 @@ namespace RKISControl.ViewModels
 
         private void GetLogin()
         {
-            var worker = workerViewModel.GetWorker(Login, Password);
+            var worker = viewModelLocator.WorkerViewModel.GetWorker(Login, Password);
 
             if (worker != null && worker.Role == "Администратор")
             {
                 SetFullNameWorker(worker);
 
-                menuViewModel.Role = "Администратор";
-                frame.Navigate(new MenuPageView(frame, this)
+                viewModelLocator.MenuViewModel.Role = "Администратор";
+                frame.Navigate(new MenuPageView(frame, viewModelLocator)
                 {
-                    DataContext = menuViewModel
+                    DataContext = viewModelLocator.MenuViewModel
                 });
             }
 
@@ -74,10 +70,10 @@ namespace RKISControl.ViewModels
             {
                 SetFullNameWorker(worker);
 
-                menuViewModel.Role = "Менеджер А";
-                frame.Navigate(new ManagerPageMenuView(frame, this, mallPageViewModel)
+                viewModelLocator.MenuViewModel.Role = "Менеджер А";
+                frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator)
                 {
-                    DataContext = menuViewModel
+                    DataContext = viewModelLocator.MenuViewModel
                 });
 
             }
@@ -85,10 +81,10 @@ namespace RKISControl.ViewModels
             {
                 SetFullNameWorker(worker);
 
-                menuViewModel.Role = "Менеджер С";
-                frame.Navigate(new ManagerPageMenuView(frame, this, mallPageViewModel)
+                viewModelLocator.MenuViewModel.Role = "Менеджер С";
+                frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator)
                 {
-                    DataContext = menuViewModel
+                    DataContext = viewModelLocator.MenuViewModel
                 });
             }
 
@@ -100,9 +96,9 @@ namespace RKISControl.ViewModels
 
         private void SetFullNameWorker(Worker worker)
         {
-            menuViewModel.FirstName = worker.First_Name;
-            menuViewModel.SecondName = worker.Second_Name;
-            menuViewModel.LastName = worker.Middle_Name;
+            viewModelLocator.MenuViewModel.FirstName = worker.First_Name;
+            viewModelLocator.MenuViewModel.SecondName = worker.Second_Name;
+            viewModelLocator.MenuViewModel.LastName = worker.Middle_Name;
         }
     }
 }

@@ -8,19 +8,28 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System;
 using System.Data.Entity;
+using System.Windows.Controls;
+using RKISControl.Views;
 
 namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
+        public event EventHandler CloseWindowAfterClick;
+
         private readonly RentMallDataContext db;
 
-        private readonly MallPageViewModel mallPageViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
-        public AddMallPageViewModel(MallPageViewModel mallPageViewModel, RentMallDataContext db)
+        private readonly Frame frame;
+
+        public AddMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame)
         {
-            this.mallPageViewModel = mallPageViewModel;
+            this.viewModelLocator = viewModelLocator;
+
             this.db = db;
+
+            this.frame = frame;
 
             CommitCommand = new RelayCommand(Commit);
         }
@@ -145,7 +154,7 @@ namespace RKISControl.ViewModels
                     Image = PathImage
                 };
 
-                var malls = mallPageViewModel.Malls;
+                var malls = viewModelLocator.MallPageViewModel.Malls;
 
                 malls.Add(mall);
 
@@ -156,6 +165,8 @@ namespace RKISControl.ViewModels
                 db.SaveChanges();
 
                 MessageBox.Show("Данные добавлены!");
+
+                frame.Navigate(new MallPageView(frame, viewModelLocator));
             }
             catch (Exception ex)
             {

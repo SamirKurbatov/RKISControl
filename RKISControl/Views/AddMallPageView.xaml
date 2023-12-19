@@ -27,6 +27,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="ID"/>
@@ -39,11 +40,13 @@
             <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="3" Grid.Column="1" Text="{Binding Amount}"/>
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Стоимость"/>
             <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="4" Grid.Column="1" Text="{Binding Cost}"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Коэффициент стоимости"/>
-            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="5" Grid.Column="1" Text="{Binding CoefCost}"/>
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Этаж"/>
-            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="6" Grid.Column="1" Text="{Binding Floor}"/>
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="Изображение"/> <!-- TODO: возможно сделать выбор файла для фотки -->
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Город"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="5" Grid.Column="1" Text="{Binding Town}"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Коэффициент стоимости"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="6" Grid.Column="1" Text="{Binding CoefCost}"/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Этаж"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="7" Grid.Column="1" Text="{Binding Floor}"/>
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Изображение"/> <!-- TODO: возможно сделать выбор файла для фотки -->
 
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">

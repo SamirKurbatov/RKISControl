@@ -22,15 +22,15 @@ namespace RKISControl.Views
     /// </summary>
     public partial class LoginPageView : Page
     {
-        private readonly LoginViewModel loginViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
-        public LoginPageView(LoginViewModel loginViewModel)
+        public LoginPageView(ViewModelLocator viewModelLocator)
         {
             InitializeComponent();
 
-            this.loginViewModel = loginViewModel;
+            this.viewModelLocator = viewModelLocator;
 
-            DataContext = this.loginViewModel;
+            DataContext = viewModelLocator.LoginViewModel;
         }
 
         private void password_PasswordChanged(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace RKISControl.Views
             if (passwordBox != null)
             {
                 string newPassword = passwordBox.Password;
-                loginViewModel.Password = newPassword;
+                viewModelLocator.LoginViewModel.Password = newPassword;
             }
         }
     }

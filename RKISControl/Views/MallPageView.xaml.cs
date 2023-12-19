@@ -11,23 +11,20 @@ namespace RKISControl.Views
     {
         private readonly Frame frame;
 
-        private readonly LoginViewModel viewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
-        private readonly MallPageViewModel mallPageViewModel;
-
-        public MallPageView(Frame frame, LoginViewModel viewModel, MallPageViewModel mallPageViewModel)
+        public MallPageView(Frame frame, ViewModelLocator viewModelLocator)
         {
             InitializeComponent();
             this.frame = frame;
-            this.viewModel = viewModel;
-            this.mallPageViewModel = mallPageViewModel;
+            this.viewModelLocator = viewModelLocator;
 
-            DataContext = this.mallPageViewModel;
+            DataContext = viewModelLocator.MallPageViewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new ManagerPageMenuView(frame, viewModel, mallPageViewModel));
+            frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator));
         }
     }
 }

@@ -18,11 +18,13 @@ namespace RKISControl.ViewModels
 
         private readonly Frame frame;
 
-        public MallPageViewModel(Frame frame, RentMallDataContext db)
+        private ViewModelLocator viewModelLocator;
+
+        public MallPageViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator)
         {
             this.frame = frame;
             this.db = db;
-
+            this.viewModelLocator = viewModelLocator;
             SelectedMall = new Mall();
 
             AddCommand = new RelayCommand(AddMall);
@@ -46,10 +48,14 @@ namespace RKISControl.ViewModels
 
         private void AddMall()
         {
-            frame.Navigate(new AddMallPageView(frame, this)
+            var addMallPageViewModel = viewModelLocator.AddMallPageViewModel;
+
+            var addMallPageView = new AddMallPageView(frame, viewModelLocator)
             {
-                DataContext = new AddMallPageViewModel(this, db)
-            });
+                DataContext = addMallPageViewModel
+            };
+
+            frame.Navigate(addMallPageView);
         }
 
         private void RemoveMall()
