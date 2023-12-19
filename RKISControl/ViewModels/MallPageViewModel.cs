@@ -3,7 +3,10 @@ using RKISControl.Data;
 using RKISControl.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -20,19 +23,13 @@ namespace RKISControl.ViewModels
             this.frame = frame;
             this.db = db;
 
+            SelectedMall = new Mall();
+
             AddCommand = new RelayCommand(AddMall);
+            RemoveCommand = new RelayCommand(RemoveMall);
         }
 
-        private ObservableCollection<Mall> malls; // Galina@gmai.com 8KC7wJ
-        public ObservableCollection<Mall> Malls
-        {
-            get => GetMalls();
-            set
-            {
-                malls = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<Mall> Malls => GetMalls();
 
         public Mall SelectedMall { get; set; }
 
@@ -53,6 +50,24 @@ namespace RKISControl.ViewModels
             {
                 DataContext = new AddMallPageViewModel(this, db)
             });
+        }
+
+        private void RemoveMall()
+        {
+            if (SelectedMall != null)
+            {
+                Malls.Remove(SelectedMall);
+
+                db.Malls.Remove(SelectedMall);
+
+                db.SaveChanges();
+
+                OnPropertyChanged(nameof(Malls));
+            }
+            else
+            {
+                MessageBox.Show("Не выбран элемент или элемент уже удален! ");
+            }
         }
     }
 }

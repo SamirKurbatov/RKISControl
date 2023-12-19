@@ -152,6 +152,7 @@ namespace RKISControl.ViewModels
                 OnPropertyChanged(nameof(malls));
 
                 db.Entry(mall).State = EntityState.Added;
+
                 db.SaveChanges();
 
                 MessageBox.Show("Данные добавлены!");
