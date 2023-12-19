@@ -97,11 +97,15 @@
     <Compile Include="Data\Rent.cs" />
     <Compile Include="Data\Tenant.cs" />
     <Compile Include="Data\Worker.cs" />
+    <Compile Include="ViewModels\AddMallPageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MallPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\WorkerViewModel.cs" />
+    <Compile Include="Views\AddMallPageView.xaml.cs">
+      <DependentUpon>AddMallPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPageView.xaml.cs">
       <DependentUpon>LoginPageView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +133,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddMallPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

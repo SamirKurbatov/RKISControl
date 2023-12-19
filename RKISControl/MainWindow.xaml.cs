@@ -23,11 +23,13 @@ namespace RKISControl
     /// </summary>
     public partial class MainWindow : Window
     {
+        private RentMallDataContext db = new RentMallDataContext();
+
         public MainWindow()
         {
             InitializeComponent();
-            var db = new RentMallDataContext();
-            var mallPageViewModel = new MallPageViewModel(db);
+
+            var mallPageViewModel = new MallPageViewModel(frame, db);
             var workerViewModel = new WorkerViewModel(db);
             var menuViewModel = new MenuViewModel();
 

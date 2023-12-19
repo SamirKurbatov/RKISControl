@@ -1,0 +1,54 @@
+﻿<Page x:Class="RKISControl.Views.AddMallPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RKISControl.Views" xmlns:viewmodels="clr-namespace:RKISControl.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddMallPageViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddMallPageView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="ID"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Название"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Статус"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="2" Grid.Column="1" Text="{Binding Status}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Количество"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="3" Grid.Column="1" Text="{Binding Amount}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Стоимость"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="4" Grid.Column="1" Text="{Binding Cost}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Коэффициент стоимости"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="5" Grid.Column="1" Text="{Binding CoefCost}"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Этаж"/>
+            <TextBox Style="{DynamicResource RoundedTextBoxWithCustomHeight}" Grid.Row="6" Grid.Column="1" Text="{Binding Floor}"/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Изображение"/> <!-- TODO: возможно сделать выбор файла для фотки -->
+
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Style="{DynamicResource BlueRoundedButton}" Content="Применить" Height="35" Width="120" Margin="10 0" Command="{Binding CommitCommand}"/>
+            <Button Style="{DynamicResource BlueRoundedButton}" Content="Отменить" Height="35" Width="120" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

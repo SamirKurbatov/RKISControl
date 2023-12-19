@@ -1,7 +1,10 @@
-﻿using RKISControl.Data;
+﻿using GalaSoft.MvvmLight.Command;
+using RKISControl.Data;
+using RKISControl.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace RKISControl.ViewModels
@@ -10,9 +13,14 @@ namespace RKISControl.ViewModels
     {
         private readonly RentMallDataContext db;
 
-        public MallPageViewModel(RentMallDataContext db)
+        private readonly Frame frame;
+
+        public MallPageViewModel(Frame frame, RentMallDataContext db)
         {
+            this.frame = frame;
             this.db = db;
+
+            AddCommand = new RelayCommand(AddMall);
         }
 
         private ObservableCollection<Mall> malls; // Galina@gmai.com 8KC7wJ
@@ -28,15 +36,23 @@ namespace RKISControl.ViewModels
 
         public Mall SelectedMall { get; set; }
 
-        public ObservableCollection<Mall> GetMalls()
+        private ObservableCollection<Mall> GetMalls()
         {
             return new ObservableCollection<Mall>(db.Malls.Select(m => m));
         }
 
-        public ICommand AddCommand { get; set; }
+        public ICommand AddCommand { get; }
 
-        public ICommand RemoveCommand { get; set; }
+        public ICommand RemoveCommand { get; }
 
-        public ICommand UpdateCommand { get; set; }
+        public ICommand UpdateCommand { get; }
+
+        private void AddMall()
+        {
+            frame.Navigate(new AddMallPageView(frame, this)
+            {
+                DataContext = new AddMallPageViewModel(this, db)
+            });
+        }
     }
 }

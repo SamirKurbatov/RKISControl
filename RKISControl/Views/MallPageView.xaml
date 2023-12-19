@@ -48,7 +48,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="0">Добавить</Button>
+                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="0" Command="{Binding AddCommand}">Добавить</Button>
                     <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="1">Изменить</Button>
                     <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="2">Удалить</Button>
                 </Grid>
