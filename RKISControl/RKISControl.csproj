@@ -99,6 +99,7 @@
     <Compile Include="Data\Worker.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MallPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\WorkerViewModel.cs" />
     <Compile Include="Views\LoginPageView.xaml.cs">

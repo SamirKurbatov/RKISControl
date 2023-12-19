@@ -26,7 +26,13 @@ namespace RKISControl
         public MainWindow()
         {
             InitializeComponent();
-            var loginViewModel = new LoginViewModel(frame);
+            var db = new RentMallDataContext();
+            var mallPageViewModel = new MallPageViewModel(db);
+            var workerViewModel = new WorkerViewModel(db);
+            var menuViewModel = new MenuViewModel();
+
+            var loginViewModel = new LoginViewModel(frame, mallPageViewModel, workerViewModel, menuViewModel);
+
             frame.Navigate(new LoginPageView(loginViewModel));
         }
     }

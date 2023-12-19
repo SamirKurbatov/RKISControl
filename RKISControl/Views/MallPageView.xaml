@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RKISControl.Views"
+      xmlns:viewmodel="clr-namespace:RKISControl.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodel:MallPageViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MallPageView">
@@ -34,13 +35,9 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="10" >
-                    <DataGrid Background="LightBlue">
+                    <DataGrid Background="LightBlue" ItemsSource="{Binding Malls}" SelectedItem="{Binding SelectedMall}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="100" Header="ID"/>
-                            <DataGridTextColumn Width="100" Header="Name"/>
-                            <DataGridTextColumn Width="100" Header="Phone"/>
-                            <DataGridTextColumn Width="100" Header="Adress"/>
-                            <DataGridTextColumn Width="100" Header="Rent"/>
+                       
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

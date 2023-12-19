@@ -5,18 +5,18 @@ using System.Linq;
 
 namespace RKISControl.Data
 {
-    public partial class RentMallDataContext : DbContext
+    public class RentMallDataContext : DbContext
     {
         public RentMallDataContext()
             : base("name=DataModelEF")
         {
         }
 
-        public virtual DbSet<Mall> Malls { get; set; }
-        public virtual DbSet<Pavilion> Pavilions { get; set; }
-        public virtual DbSet<Rent> Rents { get; set; }
-        public virtual DbSet<Tenant> Tenants { get; set; }
-        public virtual DbSet<Worker> Workers { get; set; }
+        public DbSet<Mall> Malls { get; set; }
+        public DbSet<Pavilion> Pavilions { get; set; }
+        public DbSet<Rent> Rents { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Worker> Workers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

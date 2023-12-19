@@ -1,18 +1,6 @@
 ﻿using RKISControl.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RKISControl.Views
 {
@@ -23,18 +11,23 @@ namespace RKISControl.Views
     {
         private readonly Frame frame;
 
-        private LoginViewModel viewModel;
+        private readonly LoginViewModel viewModel;
 
-        public MallPageView(Frame frame, LoginViewModel viewModel)
+        private readonly MallPageViewModel mallPageViewModel;
+
+        public MallPageView(Frame frame, LoginViewModel viewModel, MallPageViewModel mallPageViewModel)
         {
             InitializeComponent();
             this.frame = frame;
             this.viewModel = viewModel;
+            this.mallPageViewModel = mallPageViewModel;
+
+            DataContext = this.mallPageViewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new ManagerPageMenuView(frame, viewModel));
+            frame.Navigate(new ManagerPageMenuView(frame, viewModel, mallPageViewModel));
         }
     }
 }

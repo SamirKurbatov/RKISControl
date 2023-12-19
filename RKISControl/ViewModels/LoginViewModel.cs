@@ -15,17 +15,17 @@ namespace RKISControl.ViewModels
 
         private readonly WorkerViewModel workerViewModel;
 
-        private readonly RentMallDataContext db = new RentMallDataContext();
 
         private readonly MenuViewModel menuViewModel;
 
-        public LoginViewModel(Frame frame)
+        private readonly MallPageViewModel mallPageViewModel;
+
+        public LoginViewModel(Frame frame, MallPageViewModel mallPageViewModel, WorkerViewModel workerViewModel, MenuViewModel menuViewModel)
         {
             this.frame = frame;
-
-            this.workerViewModel = new WorkerViewModel(db);
-
-            this.menuViewModel = new MenuViewModel();
+            this.mallPageViewModel = mallPageViewModel;
+            this.workerViewModel = workerViewModel;
+            this.menuViewModel = menuViewModel;
 
             LoginCommand = new RelayCommand(GetLogin);
         }
@@ -75,7 +75,7 @@ namespace RKISControl.ViewModels
                 SetFullNameWorker(worker);
 
                 menuViewModel.Role = "Менеджер А";
-                frame.Navigate(new ManagerPageMenuView(frame, this)
+                frame.Navigate(new ManagerPageMenuView(frame, this, mallPageViewModel)
                 {
                     DataContext = menuViewModel
                 });
@@ -86,7 +86,7 @@ namespace RKISControl.ViewModels
                 SetFullNameWorker(worker);
 
                 menuViewModel.Role = "Менеджер С";
-                frame.Navigate(new ManagerPageMenuView(frame, this)
+                frame.Navigate(new ManagerPageMenuView(frame, this, mallPageViewModel)
                 {
                     DataContext = menuViewModel
                 });

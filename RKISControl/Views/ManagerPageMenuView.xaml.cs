@@ -25,16 +25,19 @@ namespace RKISControl.Views
 
         private readonly LoginViewModel loginViewModel;
 
-        public ManagerPageMenuView(Frame frame, LoginViewModel loginViewModel)
+        private readonly MallPageViewModel mallPageViewViewModel;
+
+        public ManagerPageMenuView(Frame frame, LoginViewModel loginViewModel, MallPageViewModel mallPageViewViewModel )
         {
             InitializeComponent();
             this.frame = frame;
             this.loginViewModel = loginViewModel;
+            this.mallPageViewViewModel = mallPageViewViewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MallPageView(frame, loginViewModel));
+            frame.Navigate(new MallPageView(frame, loginViewModel, mallPageViewViewModel));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
