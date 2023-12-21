@@ -35,9 +35,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="10" >
-                    <DataGrid Background="LightBlue" ItemsSource="{Binding Malls}" SelectedItem="{Binding SelectedMall}" 
-                              AutoGenerateColumns="True" 
-                              SelectionMode="Single" SelectionUnit="CellOrRowHeader" CanUserAddRows="False"/>
+                    <DataGrid Background="LightBlue" ItemsSource="{Binding Malls}" SelectedItem="{Binding SelectedMall}" />
                 </Grid>
 
                 <Grid Grid.Row="1">

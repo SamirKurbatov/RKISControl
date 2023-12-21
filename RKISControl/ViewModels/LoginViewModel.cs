@@ -1,7 +1,6 @@
-﻿
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using RKISControl.Data;
-using RKISControl.Views;
+using RKISControl.Services;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +10,10 @@ namespace RKISControl.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
+        private readonly INavigationService navigationService;
+
+        private readonly IValidatorService validatorService;
+
         private readonly Frame frame;
 
         private readonly RentMallDataContext db;
@@ -23,7 +26,11 @@ namespace RKISControl.ViewModels
             this.db = db;
             this.viewModelLocator = viewModelLocator;
 
-            LoginCommand = new RelayCommand(GetLogin);
+            navigationService = new NavigationService(frame, viewModelLocator);
+
+            validatorService = new NavigationValidatorService();
+
+            LoginCommand = new RelayCommand(ShowAccountWindow);
         }
 
 
@@ -33,6 +40,7 @@ namespace RKISControl.ViewModels
             get => login;
             set
             {
+
                 login = value;
                 OnPropertyChanged();
             }
@@ -51,54 +59,22 @@ namespace RKISControl.ViewModels
 
         public ICommand LoginCommand { get; }
 
-        private void GetLogin()
+        private void ShowAccountWindow()
         {
             var worker = viewModelLocator.WorkerViewModel.GetWorker(Login, Password);
 
-            if (worker != null && worker.Role == "Администратор")
+            var adminValidation = validatorService.Validate("Администратор", worker.Role);
+            var managerAValidation = validatorService.Validate("Менеджер А", worker.Role);
+            var managerCValidation = validatorService.Validate("Менеджер С", worker.Role);
+
+            if (adminValidation || managerAValidation || managerCValidation)
             {
-                SetFullNameWorker(worker);
-
-                viewModelLocator.MenuViewModel.Role = "Администратор";
-                frame.Navigate(new MenuPageView(frame, viewModelLocator)
-                {
-                    DataContext = viewModelLocator.MenuViewModel
-                });
+                navigationService.NavigateToMenu(worker);
             }
-
-            else if (worker != null && worker.Role == "Менеджер А")
-            {
-                SetFullNameWorker(worker);
-
-                viewModelLocator.MenuViewModel.Role = "Менеджер А";
-                frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator)
-                {
-                    DataContext = viewModelLocator.MenuViewModel
-                });
-
-            }
-            else if (worker != null && worker.Role == "Менеджер С")
-            {
-                SetFullNameWorker(worker);
-
-                viewModelLocator.MenuViewModel.Role = "Менеджер С";
-                frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator)
-                {
-                    DataContext = viewModelLocator.MenuViewModel
-                });
-            }
-
             else
             {
-                MessageBox.Show("Пользователь удален! ");
+                MessageBox.Show($"Роль сотрудника {worker.Second_Name} {worker.First_Name} {worker.Middle_Name} удалена!");
             }
-        }
-
-        private void SetFullNameWorker(Worker worker)
-        {
-            viewModelLocator.MenuViewModel.FirstName = worker.First_Name;
-            viewModelLocator.MenuViewModel.SecondName = worker.Second_Name;
-            viewModelLocator.MenuViewModel.LastName = worker.Middle_Name;
         }
     }
 }

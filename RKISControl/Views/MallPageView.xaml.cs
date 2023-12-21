@@ -24,7 +24,9 @@ namespace RKISControl.Views
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator));
+            frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator){
+                DataContext = viewModelLocator.MenuViewModel
+            });
         }
     }
 }

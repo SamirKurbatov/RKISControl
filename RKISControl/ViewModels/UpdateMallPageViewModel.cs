@@ -152,6 +152,8 @@ namespace RKISControl.ViewModels
                     db.SaveChanges();
 
                     MessageBox.Show("Данные успешно обновлены! ");
+
+                    frame.Navigate(new MallPageView(frame, viewModelLocator));
                 }
                 else
                 {

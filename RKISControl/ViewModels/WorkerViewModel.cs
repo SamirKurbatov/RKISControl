@@ -1,6 +1,8 @@
 ﻿using RKISControl.Data;
+using RKISControl.Services;
 using System;
 using System.Linq;
+using System.Windows;
 
 namespace RKISControl.ViewModels
 {
