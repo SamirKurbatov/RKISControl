@@ -35,11 +35,9 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="10" >
-                    <DataGrid Background="LightBlue" ItemsSource="{Binding Malls}" SelectedItem="{Binding SelectedMall,Mode=TwoWay}">
-                        <DataGrid.Columns>
-                       
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <DataGrid Background="LightBlue" ItemsSource="{Binding Malls}" SelectedItem="{Binding SelectedMall}" 
+                              AutoGenerateColumns="True" 
+                              SelectionMode="Single" SelectionUnit="CellOrRowHeader" CanUserAddRows="False"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -48,8 +46,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="0" Command="{Binding AddCommand}">Добавить</Button>
-                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="1" Command="{Binding UpdateCommand}">Изменить</Button>
+                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="0" Command="{Binding OpenAddPageCommand}">Добавить</Button>
+                    <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="1" Command="{Binding OpenUpdatePageCommand}">Изменить</Button>
                     <Button Style="{StaticResource BlueRoundedButton}" Margin="10" Width="150" Height="45" Grid.Column="2" Command="{Binding RemoveCommand}">Удалить</Button>
                 </Grid>
             </Grid>

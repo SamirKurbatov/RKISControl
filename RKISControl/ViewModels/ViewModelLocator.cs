@@ -39,6 +39,8 @@ namespace RKISControl.ViewModels
 
         public AddMallPageViewModel AddMallPageViewModel => new AddMallPageViewModel(this, db, frame);
 
+        public UpdateMallPageViewModel UpdateMallPageViewModel => new UpdateMallPageViewModel(this, db, frame);
+
         public MenuViewModel MenuViewModel => provider.GetRequiredService<MenuViewModel>();
 
         public WorkerViewModel WorkerViewModel => new WorkerViewModel(db);

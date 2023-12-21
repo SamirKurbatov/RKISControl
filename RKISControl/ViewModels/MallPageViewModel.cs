@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using RKISControl.Data;
 using RKISControl.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -22,29 +23,31 @@ namespace RKISControl.ViewModels
 
         public MallPageViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator)
         {
+            SelectedMall = new Mall();
+
             this.frame = frame;
             this.db = db;
             this.viewModelLocator = viewModelLocator;
-            SelectedMall = new Mall();
 
-            AddCommand = new RelayCommand(AddMall);
+            OpenAddPageCommand = new RelayCommand(AddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
+            OpenUpdatePageCommand = new RelayCommand(ChangeMall);
         }
 
         public ObservableCollection<Mall> Malls => GetMalls();
 
-        public Mall SelectedMall { get; set; }
+        public Mall SelectedMall { get; set; } 
 
         private ObservableCollection<Mall> GetMalls()
         {
             return new ObservableCollection<Mall>(db.Malls.Select(m => m));
         }
 
-        public ICommand AddCommand { get; }
+        public ICommand OpenAddPageCommand { get; }
 
         public ICommand RemoveCommand { get; }
 
-        public ICommand UpdateCommand { get; }
+        public ICommand OpenUpdatePageCommand { get; }
 
         private void AddMall()
         {
@@ -73,6 +76,19 @@ namespace RKISControl.ViewModels
             else
             {
                 MessageBox.Show("Не выбран элемент или элемент уже удален! ");
+            }
+        }
+
+        private void ChangeMall()
+        {
+            var updateMallPageViewModel = viewModelLocator.UpdateMallPageViewModel;
+
+            if (SelectedMall != null)
+            {
+                frame.Navigate(new UpdateMenuPageView(frame, viewModelLocator)
+                {
+                    DataContext = updateMallPageViewModel
+                });
             }
         }
     }

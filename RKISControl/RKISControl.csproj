@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MallPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\UpdateMallPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WorkerViewModel.cs" />
     <Compile Include="Views\AddMallPageView.xaml.cs">
@@ -124,6 +125,9 @@
     </Compile>
     <Compile Include="Views\TenantsPageView.xaml.cs">
       <DependentUpon>TenantsPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateMenuPageView.xaml.cs">
+      <DependentUpon>UpdateMenuPageView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TenantsPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateMenuPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
