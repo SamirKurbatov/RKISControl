@@ -26,6 +26,7 @@ namespace RKISControl
             InitializeComponent();
 
             RegisterComponents();
+
             serviceProvider = services.BuildServiceProvider();
             
             viewModelLocator = new ViewModelLocator(serviceProvider, frame);

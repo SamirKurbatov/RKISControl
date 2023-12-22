@@ -41,7 +41,6 @@ namespace RKISControl.ViewModels
             OpenAddPageCommand = new RelayCommand(AddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
             OpenUpdatePageCommand = new RelayCommand(ChangeMall);
-
         }
 
         public ObservableCollection<Mall> Malls => GetMalls();

@@ -52,7 +52,7 @@ namespace RKISControl.ViewModels
         private AddMallPageViewModel CreateAddMallPageViewModel(IServiceProvider provider, Frame frame)
         {
             return AddMallPageViewModel.LoadViewModel(MallPageViewModel,
-                provider.GetRequiredService<MenuViewModel>(),
+                MenuViewModel,
                 provider.GetRequiredService<RentMallDataContext>(),
                 frame,
                 provider.GetRequiredService<PageNavigationService>());

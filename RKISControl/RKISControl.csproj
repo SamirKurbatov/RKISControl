@@ -103,7 +103,7 @@
     <Compile Include="Services\IValidatorService.cs" />
     <Compile Include="Services\NavigationValidatorService.cs" />
     <Compile Include="ViewModels\AddMallPageViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

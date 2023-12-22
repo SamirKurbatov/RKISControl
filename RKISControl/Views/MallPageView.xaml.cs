@@ -23,7 +23,10 @@ namespace RKISControl.Views
             InitializeComponent();
             this.frame = frame;
             this.mallPageViewModel = mallPageViewModel;
+            this.menuViewModel = menuViewModel;
             this.navigationService = navigationService;
+
+            DataContext = mallPageViewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)

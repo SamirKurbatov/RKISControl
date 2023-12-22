@@ -33,8 +33,8 @@ namespace RKISControl.ViewModels
             this.db = db ?? throw new ArgumentNullException(nameof(db));
             this.workerViewModel = workerViewModel ?? throw new ArgumentNullException(nameof(workerViewModel));
             this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-            this.menuViewModel = menuViewModel;
-            this.mallPageViewModel = mallPageViewModel;
+            this.menuViewModel = menuViewModel ?? throw new ArgumentNullException(nameof(menuViewModel));
+            this.mallPageViewModel = mallPageViewModel ?? throw new ArgumentNullException(nameof(mallPageViewModel));
 
             validatorService = new NavigationValidatorService();
 
