@@ -1,6 +1,7 @@
 ﻿using RKISControl.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace RKISControl.Views
 {
@@ -13,20 +14,21 @@ namespace RKISControl.Views
 
         private readonly ViewModelLocator viewModelLocator;
 
-        public MallPageView(Frame frame, ViewModelLocator viewModelLocator)
+        private readonly INavigationService navigationService;
+
+        public MallPageView(Frame frame, ViewModelLocator viewModelLocator, INavigationService navigationService)
         {
             InitializeComponent();
             this.frame = frame;
             this.viewModelLocator = viewModelLocator;
+            this.navigationService = navigationService;
 
             DataContext = viewModelLocator.MallPageViewModel;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new ManagerPageMenuView(frame, viewModelLocator){
-                DataContext = viewModelLocator.MenuViewModel
-            });
+            navigationService.NavigateToPage(new ManagerPageMenuView(frame, viewModelLocator, navigationService), viewModelLocator.MenuViewModel);
         }
     }
 }

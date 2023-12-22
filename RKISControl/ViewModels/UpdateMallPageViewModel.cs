@@ -7,6 +7,7 @@ using System.Windows;
 using System;
 using GalaSoft.MvvmLight.Command;
 using System.Linq;
+using System.Windows.Navigation;
 
 namespace RKISControl.ViewModels
 {
@@ -18,13 +19,14 @@ namespace RKISControl.ViewModels
 
         private readonly Frame frame;
 
-        public UpdateMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame)
+        private readonly INavigationService navigationService;
+
+        public UpdateMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame, INavigationService navigationService)
         {
             this.viewModelLocator = viewModelLocator;
-
             this.db = db;
-
             this.frame = frame;
+            this.navigationService = navigationService;
 
             CommitCommand = new RelayCommand(Commit);
         }
@@ -153,7 +155,7 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    frame.Navigate(new MallPageView(frame, viewModelLocator));
+                    navigationService.NavigateToPage(new MallPageView(frame, viewModelLocator, navigationService));
                 }
                 else
                 {

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using RKISControl.Data;
 using RKISControl.Services;
+using RKISControl.Views;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,13 +21,12 @@ namespace RKISControl.ViewModels
 
         private readonly ViewModelLocator viewModelLocator;
 
-        public LoginViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator)
+        public LoginViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator, INavigationService navigationService)
         {
             this.frame = frame;
             this.db = db;
             this.viewModelLocator = viewModelLocator;
-
-            navigationService = new NavigationService(frame, viewModelLocator);
+            this.navigationService = navigationService;
 
             validatorService = new NavigationValidatorService();
 
@@ -69,12 +69,21 @@ namespace RKISControl.ViewModels
 
             if (adminValidation || managerAValidation || managerCValidation)
             {
-                navigationService.NavigateToMenu(worker);
+                SetValues(worker);
+                navigationService.NavigateToPage(new ManagerPageMenuView(frame, viewModelLocator, navigationService), viewModelLocator.MenuViewModel);
             }
             else
             {
                 MessageBox.Show($"Роль сотрудника {worker.Second_Name} {worker.First_Name} {worker.Middle_Name} удалена!");
             }
+        }
+
+        private void SetValues(Worker worker)
+        {
+            viewModelLocator.MenuViewModel.FirstName = worker.First_Name;
+            viewModelLocator.MenuViewModel.SecondName = worker.Second_Name;
+            viewModelLocator.MenuViewModel.LastName = worker.Middle_Name;
+            viewModelLocator.MenuViewModel.Role = worker.Role;
         }
     }
 }

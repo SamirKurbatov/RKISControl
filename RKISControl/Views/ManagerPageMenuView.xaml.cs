@@ -1,4 +1,5 @@
-﻿using RKISControl.ViewModels;
+﻿using GalaSoft.MvvmLight.Views;
+using RKISControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using INavigationService = RKISControl.ViewModels.INavigationService;
 
 namespace RKISControl.Views
 {
@@ -25,21 +27,24 @@ namespace RKISControl.Views
 
         private readonly ViewModelLocator viewModelLocator;
 
-        public ManagerPageMenuView(Frame frame, ViewModelLocator viewModelLocator)
+        private readonly INavigationService navigationService;
+
+        public ManagerPageMenuView(Frame frame, ViewModelLocator viewModelLocator, INavigationService navigationService)
         {
             InitializeComponent();
             this.frame = frame;
             this.viewModelLocator = viewModelLocator;
+            this.navigationService = navigationService;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MallPageView(frame, viewModelLocator));
+            navigationService.NavigateToPage(new MallPageView(frame, viewModelLocator, navigationService));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new LoginPageView(viewModelLocator));
+            navigationService.NavigateToPage(new LoginPageView(viewModelLocator));
         }
     }
 }

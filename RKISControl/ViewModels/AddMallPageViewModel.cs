@@ -10,6 +10,7 @@ using System;
 using System.Data.Entity;
 using System.Windows.Controls;
 using RKISControl.Views;
+using System.Windows.Navigation;
 
 namespace RKISControl.ViewModels
 {
@@ -23,13 +24,14 @@ namespace RKISControl.ViewModels
 
         private readonly Frame frame;
 
-        public AddMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame)
+        private readonly INavigationService navigationService;
+
+        public AddMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame, INavigationService navigationService)
         {
             this.viewModelLocator = viewModelLocator;
-
             this.db = db;
-
             this.frame = frame;
+            this.navigationService = navigationService;
 
             CommitCommand = new RelayCommand(Commit);
         }
@@ -166,7 +168,7 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                frame.Navigate(new MallPageView(frame, viewModelLocator));
+                navigationService.NavigateToPage(new MallPageView(frame, viewModelLocator, navigationService));
             }
             catch (Exception ex)
             {

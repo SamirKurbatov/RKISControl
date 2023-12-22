@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Background="#94bdff">
+        <StackPanel>
             <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20" Margin="0 15" Text="Авторизация" Foreground="Black"/>
         </StackPanel>
 

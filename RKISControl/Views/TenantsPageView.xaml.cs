@@ -22,7 +22,10 @@ namespace RKISControl.Views
     public partial class TenantsPageView : Page
     {
         private readonly Frame frame;
+
         private readonly ViewModelLocator viewModelLocator;
+
+        private readonly INavigationService navigationService;
 
         public TenantsPageView(Frame frame, ViewModelLocator viewModelLocator)
         {
@@ -35,7 +38,7 @@ namespace RKISControl.Views
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new MenuPageView(frame, viewModelLocator));
+            navigationService.NavigateToPage(new MenuPageView(frame, viewModelLocator, navigationService));
         }
     }
 }

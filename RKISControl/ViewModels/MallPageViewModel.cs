@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace RKISControl.ViewModels
 {
@@ -19,15 +20,18 @@ namespace RKISControl.ViewModels
 
         private readonly Frame frame;
 
-        private ViewModelLocator viewModelLocator;
+        private readonly ViewModelLocator viewModelLocator;
 
-        public MallPageViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator)
+        private readonly INavigationService navigationService;
+
+        public MallPageViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator, INavigationService navigationService)
         {
             SelectedMall = new Mall();
 
             this.frame = frame;
             this.db = db;
             this.viewModelLocator = viewModelLocator;
+            this.navigationService = navigationService;
 
             OpenAddPageCommand = new RelayCommand(AddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
@@ -53,12 +57,7 @@ namespace RKISControl.ViewModels
         {
             var addMallPageViewModel = viewModelLocator.AddMallPageViewModel;
 
-            var addMallPageView = new AddMallPageView(frame, viewModelLocator)
-            {
-                DataContext = addMallPageViewModel
-            };
-
-            frame.Navigate(addMallPageView);
+            navigationService.NavigateToPage(new AddMallPageView(frame, viewModelLocator, navigationService), addMallPageViewModel);
         }
 
         private void RemoveMall()
@@ -85,10 +84,7 @@ namespace RKISControl.ViewModels
 
             if (SelectedMall != null)
             {
-                frame.Navigate(new UpdateMenuPageView(frame, viewModelLocator)
-                {
-                    DataContext = updateMallPageViewModel
-                });
+                navigationService.NavigateToPage(new UpdateMenuPageView(frame, viewModelLocator, navigationService), updateMallPageViewModel);
             }
         }
     }

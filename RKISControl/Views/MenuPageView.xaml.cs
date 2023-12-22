@@ -26,21 +26,24 @@ namespace RKISControl.Views
 
         private readonly ViewModelLocator viewModelLocator;
 
-        public MenuPageView(Frame frame, ViewModelLocator viewModelLocator)
+        private readonly INavigationService navigationService;
+
+        public MenuPageView(Frame frame, ViewModelLocator viewModelLocator, INavigationService navigationService)
         {
             InitializeComponent();
             this.frame = frame;
             this.viewModelLocator = viewModelLocator;
+            this.navigationService = navigationService;
         }
 
         private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new TenantsPageView(frame, viewModelLocator));
+            navigationService.NavigateToPage(new TenantsPageView(frame, viewModelLocator));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new LoginPageView(viewModelLocator));
+            navigationService.NavigateToPage(new LoginPageView(viewModelLocator));
         }
     }
 }

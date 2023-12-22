@@ -14,19 +14,25 @@ namespace RKISControl
     {
         private IServiceCollection services = new ServiceCollection();
 
+        private INavigationService pageNavigationService;
+
         private IServiceProvider serviceProvider;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            RegisterServices();
+
             RegisterViewModels();
 
             serviceProvider = services.BuildServiceProvider();
 
-            var viewModelLocator = new ViewModelLocator(frame, serviceProvider);
+            pageNavigationService = new PageNavigationService(frame);
 
-            frame.Navigate(new LoginPageView(viewModelLocator));
+            var viewModelLocator = new ViewModelLocator(frame, serviceProvider, pageNavigationService);
+
+            pageNavigationService.NavigateToPage(new LoginPageView(viewModelLocator), viewModelLocator.LoginViewModel);
         }
 
         private void RegisterViewModels()
@@ -37,6 +43,11 @@ namespace RKISControl
             services.AddSingleton<MallPageViewModel>();
             services.AddSingleton<RentMallDataContext>();
             services.AddSingleton<AddMallPageViewModel>();
+        }
+
+        private void RegisterServices()
+        {
+            services.AddSingleton<INavigationService, PageNavigationService>();
         }
     }
 }

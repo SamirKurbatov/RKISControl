@@ -101,6 +101,7 @@
     <Compile Include="Data\Tenant.cs" />
     <Compile Include="Data\Worker.cs" />
     <Compile Include="Services\IValidatorService.cs" />
+    <Compile Include="Services\NavigationValidatorService.cs" />
     <Compile Include="ViewModels\AddMallPageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
