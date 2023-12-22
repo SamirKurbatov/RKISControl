@@ -1,51 +1,75 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RKISControl.Data;
+using RKISControl.Views;
 using System;
+using System.Net.Http.Headers;
 using System.Windows.Controls;
 
 namespace RKISControl.ViewModels
 {
     public class ViewModelLocator
     {
-        private readonly Frame frame;
-
-        private readonly IServiceProvider provider;
-
-        private readonly INavigationService navigationService;
-
-        private readonly RentMallDataContext db;
-
-        public ViewModelLocator(Frame frame, IServiceProvider provider, INavigationService navigationService)
+        public ViewModelLocator(IServiceProvider provider, Frame frame)
         {
-            this.provider = provider;
-            this.frame = frame;
-            this.navigationService = navigationService;
-
-            db = provider.GetRequiredService<RentMallDataContext>();
+            MenuViewModel = new MenuViewModel();
+            MallPageViewModel = CreateMallPageViewModel(provider, frame);
+            AddMallPageViewModel = CreateAddMallPageViewModel(provider, frame);
+            UpdateMallPageViewModel = CreateUpdateMallPageViewModel(provider, frame);
+            WorkerViewModel = CreateWorkerViewModel(provider);
+            LoginViewModel =  CreateLoginViewModel(provider, frame);
         }
 
-        private LoginViewModel loginViewModelInstance;
+        public LoginViewModel LoginViewModel { get; }
 
-        public LoginViewModel LoginViewModel
+        public MallPageViewModel MallPageViewModel { get; }
+
+        public AddMallPageViewModel AddMallPageViewModel { get; }
+
+        public UpdateMallPageViewModel UpdateMallPageViewModel { get; }
+
+        public MenuViewModel MenuViewModel { get; }
+
+        public WorkerViewModel WorkerViewModel { get; }
+
+        private LoginViewModel CreateLoginViewModel(IServiceProvider provider, Frame frame)
         {
-            get
-            {
-                if (loginViewModelInstance == null)
-                {
-                    loginViewModelInstance = new LoginViewModel(frame, db, this, navigationService);
-                }
-                return loginViewModelInstance;
-            }
+            var dataContext = provider.GetRequiredService<RentMallDataContext>();
+            var navigationService = provider.GetRequiredService<PageNavigationService>();
+
+            return LoginViewModel.LoadViewModel(frame, dataContext, WorkerViewModel, navigationService,
+                MenuViewModel, MallPageViewModel);
         }
 
-        public MallPageViewModel MallPageViewModel => new MallPageViewModel(frame, db, this, navigationService);
+        private MallPageViewModel CreateMallPageViewModel(IServiceProvider provider, Frame frame)
+        {
+            return MallPageViewModel.LoadViewModel(frame,
+                provider.GetRequiredService<RentMallDataContext>(),
+                provider.GetRequiredService<PageNavigationService>(),
+                MenuViewModel,
+                AddMallPageViewModel);
+        }
 
-        public AddMallPageViewModel AddMallPageViewModel => new AddMallPageViewModel(this, db, frame, navigationService);
+        private AddMallPageViewModel CreateAddMallPageViewModel(IServiceProvider provider, Frame frame)
+        {
+            return AddMallPageViewModel.LoadViewModel(MallPageViewModel,
+                provider.GetRequiredService<MenuViewModel>(),
+                provider.GetRequiredService<RentMallDataContext>(),
+                frame,
+                provider.GetRequiredService<PageNavigationService>());
+        }
 
-        public UpdateMallPageViewModel UpdateMallPageViewModel => new UpdateMallPageViewModel(this, db, frame, navigationService);
+        private UpdateMallPageViewModel CreateUpdateMallPageViewModel(IServiceProvider provider, Frame frame)
+        {
+            return UpdateMallPageViewModel.LoadViewModel(MallPageViewModel,
+                MenuViewModel,
+                provider.GetRequiredService<RentMallDataContext>(),
+                frame,
+                provider.GetRequiredService<PageNavigationService>());
+        }
 
-        public MenuViewModel MenuViewModel => provider.GetRequiredService<MenuViewModel>();
-
-        public WorkerViewModel WorkerViewModel => new WorkerViewModel(db);
+        private WorkerViewModel CreateWorkerViewModel(IServiceProvider provider)
+        {
+            return WorkerViewModel.LoadViewModel(provider.GetRequiredService<RentMallDataContext>());
+        }
     }
 }

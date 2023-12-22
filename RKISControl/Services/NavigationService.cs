@@ -26,5 +26,6 @@ namespace RKISControl.ViewModels
         {
             frame.Navigate(view);
         }
+
     }
 }

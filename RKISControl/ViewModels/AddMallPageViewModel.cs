@@ -16,19 +16,20 @@ namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
-        public event EventHandler CloseWindowAfterClick;
-
         private readonly RentMallDataContext db;
 
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly MallPageViewModel mallPageViewModel;
+
+        private readonly MenuViewModel menuPageViewModel;
 
         private readonly Frame frame;
 
         private readonly INavigationService navigationService;
 
-        public AddMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        public AddMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.mallPageViewModel = mallPageViewModel;
+            this.menuPageViewModel = menuPageViewModel;
             this.db = db;
             this.frame = frame;
             this.navigationService = navigationService;
@@ -139,6 +140,11 @@ namespace RKISControl.ViewModels
 
         public ICommand CommitCommand { get; set; }
 
+        public static AddMallPageViewModel LoadViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        {
+            return new AddMallPageViewModel(mallPageViewModel, menuPageViewModel, db, frame, navigationService);
+        }
+
         private void Commit()
         {
             try
@@ -156,7 +162,7 @@ namespace RKISControl.ViewModels
                     Image = PathImage
                 };
 
-                var malls = viewModelLocator.MallPageViewModel.Malls;
+                var malls = mallPageViewModel.Malls;
 
                 malls.Add(mall);
 
@@ -168,7 +174,7 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                navigationService.NavigateToPage(new MallPageView(frame, viewModelLocator, navigationService));
+                navigationService.NavigateToPage(new MallPageView(frame, mallPageViewModel, menuPageViewModel, navigationService));
             }
             catch (Exception ex)
             {

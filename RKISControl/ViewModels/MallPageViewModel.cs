@@ -20,27 +20,33 @@ namespace RKISControl.ViewModels
 
         private readonly Frame frame;
 
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly UpdateMallPageViewModel updateMallPageViewModel;
+
+        private readonly AddMallPageViewModel addMallPageViewModel;
+
+        private readonly MenuViewModel menuPageViewModel;
 
         private readonly INavigationService navigationService;
 
-        public MallPageViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator, INavigationService navigationService)
+        public MallPageViewModel(Frame frame, RentMallDataContext db, INavigationService navigationService, MenuViewModel menuPageViewModel, AddMallPageViewModel addMallPageViewModel)
         {
             SelectedMall = new Mall();
 
             this.frame = frame;
             this.db = db;
-            this.viewModelLocator = viewModelLocator;
             this.navigationService = navigationService;
+            this.menuPageViewModel = menuPageViewModel;
+            this.addMallPageViewModel = addMallPageViewModel;
 
             OpenAddPageCommand = new RelayCommand(AddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
             OpenUpdatePageCommand = new RelayCommand(ChangeMall);
+
         }
 
         public ObservableCollection<Mall> Malls => GetMalls();
 
-        public Mall SelectedMall { get; set; } 
+        public Mall SelectedMall { get; set; }
 
         private ObservableCollection<Mall> GetMalls()
         {
@@ -53,11 +59,15 @@ namespace RKISControl.ViewModels
 
         public ICommand OpenUpdatePageCommand { get; }
 
+        public static MallPageViewModel LoadViewModel(Frame frame, RentMallDataContext db, INavigationService navigationService, 
+            MenuViewModel menuPageViewModel, AddMallPageViewModel addMallPageViewModel)
+        {
+            return new MallPageViewModel(frame, db, navigationService, menuPageViewModel, addMallPageViewModel);
+        }
+
         private void AddMall()
         {
-            var addMallPageViewModel = viewModelLocator.AddMallPageViewModel;
-
-            navigationService.NavigateToPage(new AddMallPageView(frame, viewModelLocator, navigationService), addMallPageViewModel);
+            navigationService.NavigateToPage(new AddMallPageView(frame, navigationService, this, menuPageViewModel), addMallPageViewModel);
         }
 
         private void RemoveMall()
@@ -80,11 +90,9 @@ namespace RKISControl.ViewModels
 
         private void ChangeMall()
         {
-            var updateMallPageViewModel = viewModelLocator.UpdateMallPageViewModel;
-
             if (SelectedMall != null)
             {
-                navigationService.NavigateToPage(new UpdateMenuPageView(frame, viewModelLocator, navigationService), updateMallPageViewModel);
+                navigationService.NavigateToPage(new UpdateMenuPageView(frame, navigationService, this, menuPageViewModel), updateMallPageViewModel);
             }
         }
     }

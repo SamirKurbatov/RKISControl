@@ -19,5 +19,12 @@ namespace RKISControl.ViewModels
         {
             return db.Workers.Where(w => w.Password == password && w.Login == login).FirstOrDefault();
         }
+
+        public static WorkerViewModel LoadViewModel(RentMallDataContext db)
+        {
+            var viewModel = new WorkerViewModel(db);
+
+            return viewModel;
+        }
     }
 }

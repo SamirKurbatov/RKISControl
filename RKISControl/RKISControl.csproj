@@ -106,6 +106,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MallPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Services\NavigationService.cs" />

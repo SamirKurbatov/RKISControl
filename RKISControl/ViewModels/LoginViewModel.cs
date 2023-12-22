@@ -3,6 +3,7 @@ using RKISControl.Data;
 using RKISControl.Services;
 using RKISControl.Views;
 using System;
+using System.Data.Entity;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,20 +20,28 @@ namespace RKISControl.ViewModels
 
         private readonly RentMallDataContext db;
 
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly MenuViewModel menuViewModel;
 
-        public LoginViewModel(Frame frame, RentMallDataContext db, ViewModelLocator viewModelLocator, INavigationService navigationService)
+        private readonly MallPageViewModel mallPageViewModel;
+
+        private readonly WorkerViewModel workerViewModel;
+
+        public LoginViewModel(Frame frame, RentMallDataContext db, WorkerViewModel workerViewModel, INavigationService navigationService,
+            MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel)
         {
-            this.frame = frame;
-            this.db = db;
-            this.viewModelLocator = viewModelLocator;
-            this.navigationService = navigationService;
+            this.frame = frame ?? throw new ArgumentNullException(nameof(frame));
+            this.db = db ?? throw new ArgumentNullException(nameof(db));
+            this.workerViewModel = workerViewModel ?? throw new ArgumentNullException(nameof(workerViewModel));
+            this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            this.menuViewModel = menuViewModel;
+            this.mallPageViewModel = mallPageViewModel;
 
             validatorService = new NavigationValidatorService();
 
             LoginCommand = new RelayCommand(ShowAccountWindow);
         }
 
+        #region Properties
 
         private string login;
         public string Login
@@ -58,10 +67,19 @@ namespace RKISControl.ViewModels
         }
 
         public ICommand LoginCommand { get; }
+        #endregion
+
+        public static LoginViewModel LoadViewModel(Frame frame, RentMallDataContext db, WorkerViewModel workerViewModel, INavigationService navigationService,
+            MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel)
+        {
+            var viewModel = new LoginViewModel(frame, db, workerViewModel, navigationService, menuViewModel, mallPageViewModel);
+
+            return viewModel;
+        }
 
         private void ShowAccountWindow()
         {
-            var worker = viewModelLocator.WorkerViewModel.GetWorker(Login, Password);
+            var worker = workerViewModel.GetWorker(Login, Password);
 
             var adminValidation = validatorService.Validate("Администратор", worker.Role);
             var managerAValidation = validatorService.Validate("Менеджер А", worker.Role);
@@ -70,7 +88,7 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                navigationService.NavigateToPage(new ManagerPageMenuView(frame, viewModelLocator, navigationService), viewModelLocator.MenuViewModel);
+                navigationService.NavigateToPage(new ManagerPageMenuView(frame, menuViewModel, mallPageViewModel, navigationService), menuViewModel);
             }
             else
             {
@@ -80,10 +98,10 @@ namespace RKISControl.ViewModels
 
         private void SetValues(Worker worker)
         {
-            viewModelLocator.MenuViewModel.FirstName = worker.First_Name;
-            viewModelLocator.MenuViewModel.SecondName = worker.Second_Name;
-            viewModelLocator.MenuViewModel.LastName = worker.Middle_Name;
-            viewModelLocator.MenuViewModel.Role = worker.Role;
+            menuViewModel.FirstName = worker.First_Name;
+            menuViewModel.SecondName = worker.Second_Name;
+            menuViewModel.LastName = worker.Middle_Name;
+            menuViewModel.Role = worker.Role;
         }
     }
 }

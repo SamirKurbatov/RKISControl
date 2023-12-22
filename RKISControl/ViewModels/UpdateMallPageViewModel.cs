@@ -15,15 +15,18 @@ namespace RKISControl.ViewModels
     {
         private readonly RentMallDataContext db;
 
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly MallPageViewModel mallPageViewModel;
+
+        private readonly MenuViewModel menuPageViewModel;
 
         private readonly Frame frame;
 
         private readonly INavigationService navigationService;
 
-        public UpdateMallPageViewModel(ViewModelLocator viewModelLocator, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        public UpdateMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.mallPageViewModel = mallPageViewModel;
+            this.menuPageViewModel = menuPageViewModel;
             this.db = db;
             this.frame = frame;
             this.navigationService = navigationService;
@@ -132,6 +135,11 @@ namespace RKISControl.ViewModels
         }
         #endregion
 
+        public static UpdateMallPageViewModel LoadViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        {
+            return new UpdateMallPageViewModel(mallPageViewModel, menuPageViewModel, db, frame, navigationService);
+        }
+
         public ICommand CommitCommand { get; set; }
 
         private void Commit()
@@ -155,13 +163,13 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    navigationService.NavigateToPage(new MallPageView(frame, viewModelLocator, navigationService));
+                    navigationService.NavigateToPage(new MallPageView(frame, mallPageViewModel, menuPageViewModel, navigationService));
                 }
                 else
                 {
                     MessageBox.Show($"Торговый центр с {Id} не найден! ");
                 }
-                
+
             }
             else
             {

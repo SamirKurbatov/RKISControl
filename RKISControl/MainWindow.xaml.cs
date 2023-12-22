@@ -4,6 +4,7 @@ using RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RKISControl
 {
@@ -12,42 +13,49 @@ namespace RKISControl
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IServiceCollection services = new ServiceCollection();
+        private readonly IServiceCollection services = new ServiceCollection();
 
-        private INavigationService pageNavigationService;
+        private readonly IServiceProvider serviceProvider;
 
-        private IServiceProvider serviceProvider;
+        private readonly INavigationService pageNavigationService;
+
+        private readonly ViewModelLocator viewModelLocator;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            RegisterServices();
-
-            RegisterViewModels();
-
+            RegisterComponents();
             serviceProvider = services.BuildServiceProvider();
+            
+            viewModelLocator = new ViewModelLocator(serviceProvider, frame);
 
-            pageNavigationService = new PageNavigationService(frame);
-
-            var viewModelLocator = new ViewModelLocator(frame, serviceProvider, pageNavigationService);
-
-            pageNavigationService.NavigateToPage(new LoginPageView(viewModelLocator), viewModelLocator.LoginViewModel);
+            pageNavigationService = serviceProvider.GetRequiredService<PageNavigationService>();
+            
+            pageNavigationService.NavigateToPage(new LoginPageView(viewModelLocator.LoginViewModel), viewModelLocator.LoginViewModel);
         }
 
         private void RegisterViewModels()
         {
             services.AddSingleton<WorkerViewModel>();
-            services.AddSingleton<LoginViewModel>();
             services.AddSingleton<MenuViewModel>();
             services.AddSingleton<MallPageViewModel>();
-            services.AddSingleton<RentMallDataContext>();
             services.AddSingleton<AddMallPageViewModel>();
+            services.AddSingleton<UpdateMallPageViewModel>();
+            services.AddTransient<LoginViewModel>();
         }
 
         private void RegisterServices()
         {
+            services.AddSingleton<RentMallDataContext>();
+            services.AddSingleton(provider => new PageNavigationService(frame));
             services.AddSingleton<INavigationService, PageNavigationService>();
+        }
+
+        private void RegisterComponents()
+        {
+            RegisterServices();
+            RegisterViewModels();
         }
     }
 }
