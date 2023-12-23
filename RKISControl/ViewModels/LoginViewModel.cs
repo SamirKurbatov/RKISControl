@@ -12,29 +12,22 @@ namespace RKISControl.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly INavigationService navigationService;
-
         private readonly IValidatorService validatorService;
-
-        private readonly Frame frame;
-
-        private readonly RentMallDataContext db;
 
         private readonly MenuViewModel menuViewModel;
 
         private readonly MallPageViewModel mallPageViewModel;
 
-        private readonly WorkerViewModel workerViewModel;
+        private readonly WorkerService workerViewModel;
 
-        public LoginViewModel(Frame frame, RentMallDataContext db, WorkerViewModel workerViewModel, INavigationService navigationService,
-            MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel)
+        public LoginViewModel(Frame frame, 
+            RentMallDataContext dataContext, 
+            INavigateService navigateService,
+            WorkerService workerViewModel, MallPageViewModel mallPageViewModel, MenuViewModel menuViewModel) : base(frame, dataContext, navigateService)
         {
-            this.frame = frame ?? throw new ArgumentNullException(nameof(frame));
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
-            this.workerViewModel = workerViewModel ?? throw new ArgumentNullException(nameof(workerViewModel));
-            this.navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-            this.menuViewModel = menuViewModel ?? throw new ArgumentNullException(nameof(menuViewModel));
-            this.mallPageViewModel = mallPageViewModel ?? throw new ArgumentNullException(nameof(mallPageViewModel));
+            this.workerViewModel = workerViewModel;
+            this.mallPageViewModel = mallPageViewModel;
+            this.menuViewModel = menuViewModel;
 
             validatorService = new NavigationValidatorService();
 
@@ -69,14 +62,6 @@ namespace RKISControl.ViewModels
         public ICommand LoginCommand { get; }
         #endregion
 
-        public static LoginViewModel LoadViewModel(Frame frame, RentMallDataContext db, WorkerViewModel workerViewModel, INavigationService navigationService,
-            MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel)
-        {
-            var viewModel = new LoginViewModel(frame, db, workerViewModel, navigationService, menuViewModel, mallPageViewModel);
-
-            return viewModel;
-        }
-
         private void ShowAccountWindow()
         {
             var worker = workerViewModel.GetWorker(Login, Password);
@@ -88,7 +73,10 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                navigationService.NavigateToPage(new ManagerPageMenuView(frame, menuViewModel, mallPageViewModel, navigationService), menuViewModel);
+                NavigateService.NavigateToPage(new ManagerPageMenuView(Frame, menuViewModel, mallPageViewModel, NavigateService)
+                {
+                    DataContext = menuViewModel
+                });
             }
             else
             {

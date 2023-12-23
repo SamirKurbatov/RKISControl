@@ -6,11 +6,11 @@ using System.Windows;
 
 namespace RKISControl.ViewModels
 {
-    public class WorkerViewModel
+    public class WorkerService
     {
         private RentMallDataContext db;
 
-        public WorkerViewModel(RentMallDataContext db)
+        public WorkerService(RentMallDataContext db)
         {
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
@@ -18,13 +18,6 @@ namespace RKISControl.ViewModels
         public Worker GetWorker(string login, string password)
         {
             return db.Workers.Where(w => w.Password == password && w.Login == login).FirstOrDefault();
-        }
-
-        public static WorkerViewModel LoadViewModel(RentMallDataContext db)
-        {
-            var viewModel = new WorkerViewModel(db);
-
-            return viewModel;
         }
     }
 }

@@ -27,9 +27,9 @@ namespace RKISControl.Views
 
         private readonly MenuViewModel menuPageViewModel;
 
-        private readonly INavigationService navigationService;
+        private readonly INavigateService navigationService;
 
-        public UpdateMenuPageView(Frame frame, INavigationService navigationService, MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel)
+        public UpdateMenuPageView(Frame frame, INavigateService navigationService, MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel)
         {
             InitializeComponent();
 

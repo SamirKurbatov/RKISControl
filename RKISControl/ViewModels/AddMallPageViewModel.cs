@@ -16,24 +16,16 @@ namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
-        private readonly RentMallDataContext db;
-
         private readonly MallPageViewModel mallPageViewModel;
 
         private readonly MenuViewModel menuPageViewModel;
 
-        private readonly Frame frame;
-
-        private readonly INavigationService navigationService;
-
-        public AddMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        public AddMallPageViewModel(Frame frame, 
+            RentMallDataContext dataContext, 
+            INavigateService navigateService, MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel) : base(frame, dataContext, navigateService)
         {
             this.mallPageViewModel = mallPageViewModel;
             this.menuPageViewModel = menuPageViewModel;
-            this.db = db;
-            this.frame = frame;
-            this.navigationService = navigationService;
-
             CommitCommand = new RelayCommand(Commit);
         }
 
@@ -140,11 +132,6 @@ namespace RKISControl.ViewModels
 
         public ICommand CommitCommand { get; set; }
 
-        public static AddMallPageViewModel LoadViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
-        {
-            return new AddMallPageViewModel(mallPageViewModel, menuPageViewModel, db, frame, navigationService);
-        }
-
         private void Commit()
         {
             try
@@ -168,13 +155,13 @@ namespace RKISControl.ViewModels
 
                 OnPropertyChanged(nameof(malls));
 
-                db.Entry(mall).State = EntityState.Added;
+                DataContext.Entry(mall).State = EntityState.Added;
 
-                db.SaveChanges();
+                DataContext.SaveChanges();
 
                 MessageBox.Show("Данные добавлены!");
 
-                navigationService.NavigateToPage(new MallPageView(frame, mallPageViewModel, menuPageViewModel, navigationService));
+                NavigateService.NavigateToPage(new MallPageView(Frame, mallPageViewModel, menuPageViewModel, NavigateService));
             }
             catch (Exception ex)
             {

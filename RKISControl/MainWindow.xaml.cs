@@ -17,7 +17,7 @@ namespace RKISControl
 
         private readonly IServiceProvider serviceProvider;
 
-        private readonly INavigationService pageNavigationService;
+        private readonly INavigateService pageNavigationService;
 
         private readonly ViewModelLocator viewModelLocator;
 
@@ -38,7 +38,7 @@ namespace RKISControl
 
         private void RegisterViewModels()
         {
-            services.AddSingleton<WorkerViewModel>();
+            services.AddSingleton<WorkerService>();
             services.AddSingleton<MenuViewModel>();
             services.AddSingleton<MallPageViewModel>();
             services.AddSingleton<AddMallPageViewModel>();
@@ -50,7 +50,7 @@ namespace RKISControl
         {
             services.AddSingleton<RentMallDataContext>();
             services.AddSingleton(provider => new PageNavigationService(frame));
-            services.AddSingleton<INavigationService, PageNavigationService>();
+            services.AddSingleton<INavigateService, PageNavigationService>();
         }
 
         private void RegisterComponents()

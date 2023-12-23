@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace RKISControl.ViewModels
 {
-    public class PageNavigationService : INavigationService
+    public class PageNavigationService : INavigateService
     {
         private readonly Frame frame;
 

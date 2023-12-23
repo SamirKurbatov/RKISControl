@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using INavigationService = RKISControl.ViewModels.INavigationService;
+using INavigateService = RKISControl.ViewModels.INavigateService;
 
 namespace RKISControl.Views
 {
@@ -31,9 +31,9 @@ namespace RKISControl.Views
 
         private readonly LoginViewModel loginViewModel;
 
-        private readonly INavigationService navigationService;
+        private readonly INavigateService navigationService;
 
-        public ManagerPageMenuView(Frame frame, MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel, INavigationService navigationService)
+        public ManagerPageMenuView(Frame frame, MenuViewModel menuViewModel, MallPageViewModel mallPageViewModel, INavigateService navigationService)
         {
             InitializeComponent();
             this.frame = frame;

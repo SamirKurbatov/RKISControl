@@ -26,9 +26,9 @@ namespace RKISControl.Views
 
         private readonly LoginViewModel loginViewModel;
 
-        private readonly INavigationService navigationService;
+        private readonly INavigateService navigationService;
 
-        public MenuPageView(Frame frame, LoginViewModel loginViewModel, INavigationService navigationService)
+        public MenuPageView(Frame frame, LoginViewModel loginViewModel, INavigateService navigationService)
         {
             InitializeComponent();
             this.frame = frame;

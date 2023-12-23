@@ -1,8 +1,11 @@
 ﻿using RKISControl.Data;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 
 namespace RKISControl.ViewModels
 {
-    public class MenuViewModel : BaseViewModel
+    public class MenuViewModel
     {
         private string role;
         public string Role
@@ -38,6 +41,8 @@ namespace RKISControl.ViewModels
         }
 
         private string lastName;
+
+   
         public string LastName
         {
             get => lastName;
@@ -49,5 +54,12 @@ namespace RKISControl.ViewModels
         }
 
         public string FullName => $"{FirstName} {SecondName} {LastName}";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propname = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
+        }
     }
 }

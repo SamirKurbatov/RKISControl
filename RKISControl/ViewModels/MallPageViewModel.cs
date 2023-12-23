@@ -16,27 +16,24 @@ namespace RKISControl.ViewModels
 {
     public class MallPageViewModel : BaseViewModel
     {
-        private readonly RentMallDataContext db;
-
-        private readonly Frame frame;
-
         private readonly UpdateMallPageViewModel updateMallPageViewModel;
 
         private readonly AddMallPageViewModel addMallPageViewModel;
 
         private readonly MenuViewModel menuPageViewModel;
 
-        private readonly INavigationService navigationService;
-
-        public MallPageViewModel(Frame frame, RentMallDataContext db, INavigationService navigationService, MenuViewModel menuPageViewModel, AddMallPageViewModel addMallPageViewModel)
+        public MallPageViewModel(Frame frame, 
+            RentMallDataContext dataContext, 
+            INavigateService navigateService,
+            UpdateMallPageViewModel updateMallPageViewModel, AddMallPageViewModel addMallPageViewModel, MenuViewModel menuPageViewModel) 
+                : base(frame, dataContext, navigateService)
         {
+            this.updateMallPageViewModel = updateMallPageViewModel;
+            this.addMallPageViewModel = addMallPageViewModel;
+            this.menuPageViewModel = menuPageViewModel;
+
             SelectedMall = new Mall();
 
-            this.frame = frame;
-            this.db = db;
-            this.navigationService = navigationService;
-            this.menuPageViewModel = menuPageViewModel;
-            this.addMallPageViewModel = addMallPageViewModel;
 
             OpenAddPageCommand = new RelayCommand(AddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
@@ -49,7 +46,7 @@ namespace RKISControl.ViewModels
 
         private ObservableCollection<Mall> GetMalls()
         {
-            return new ObservableCollection<Mall>(db.Malls.Select(m => m));
+            return new ObservableCollection<Mall>(DataContext.Malls.Select(m => m));
         }
 
         public ICommand OpenAddPageCommand { get; }
@@ -58,15 +55,9 @@ namespace RKISControl.ViewModels
 
         public ICommand OpenUpdatePageCommand { get; }
 
-        public static MallPageViewModel LoadViewModel(Frame frame, RentMallDataContext db, INavigationService navigationService, 
-            MenuViewModel menuPageViewModel, AddMallPageViewModel addMallPageViewModel)
-        {
-            return new MallPageViewModel(frame, db, navigationService, menuPageViewModel, addMallPageViewModel);
-        }
-
         private void AddMall()
         {
-            navigationService.NavigateToPage(new AddMallPageView(frame, navigationService, this, menuPageViewModel), addMallPageViewModel);
+            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, this, menuPageViewModel), addMallPageViewModel);
         }
 
         private void RemoveMall()
@@ -75,9 +66,9 @@ namespace RKISControl.ViewModels
             {
                 Malls.Remove(SelectedMall);
 
-                db.Malls.Remove(SelectedMall);
+                DataContext.Malls.Remove(SelectedMall);
 
-                db.SaveChanges();
+                DataContext.SaveChanges();
 
                 OnPropertyChanged(nameof(Malls));
             }
@@ -91,7 +82,7 @@ namespace RKISControl.ViewModels
         {
             if (SelectedMall != null)
             {
-                navigationService.NavigateToPage(new UpdateMenuPageView(frame, navigationService, this, menuPageViewModel), updateMallPageViewModel);
+                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, this, menuPageViewModel), updateMallPageViewModel);
             }
         }
     }

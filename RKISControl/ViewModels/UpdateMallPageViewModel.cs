@@ -13,23 +13,18 @@ namespace RKISControl.ViewModels
 {
     public class UpdateMallPageViewModel : BaseViewModel
     {
-        private readonly RentMallDataContext db;
-
         private readonly MallPageViewModel mallPageViewModel;
 
         private readonly MenuViewModel menuPageViewModel;
 
-        private readonly Frame frame;
-
-        private readonly INavigationService navigationService;
-
-        public UpdateMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
+        public UpdateMallPageViewModel(Frame frame, 
+            RentMallDataContext dataContext, 
+            INavigateService navigateService,
+            MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel) 
+                : base(frame, dataContext, navigateService)
         {
             this.mallPageViewModel = mallPageViewModel;
             this.menuPageViewModel = menuPageViewModel;
-            this.db = db;
-            this.frame = frame;
-            this.navigationService = navigationService;
 
             CommitCommand = new RelayCommand(Commit);
         }
@@ -135,18 +130,13 @@ namespace RKISControl.ViewModels
         }
         #endregion
 
-        public static UpdateMallPageViewModel LoadViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel, RentMallDataContext db, Frame frame, INavigationService navigationService)
-        {
-            return new UpdateMallPageViewModel(mallPageViewModel, menuPageViewModel, db, frame, navigationService);
-        }
-
         public ICommand CommitCommand { get; set; }
 
         private void Commit()
         {
-            if (Id > 0 && db != null)
+            if (Id > 0 && DataContext != null)
             {
-                var mallToUpdate = db.Malls.FirstOrDefault(m => m.ID == Id);
+                var mallToUpdate = DataContext.Malls.FirstOrDefault(m => m.ID == Id);
 
                 if (mallToUpdate != null)
                 {
@@ -159,11 +149,11 @@ namespace RKISControl.ViewModels
                     mallToUpdate.Floor = Floor;
                     mallToUpdate.Image = PathImage;
 
-                    db.SaveChanges();
+                    DataContext.SaveChanges();
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    navigationService.NavigateToPage(new MallPageView(frame, mallPageViewModel, menuPageViewModel, navigationService));
+                    NavigateService.NavigateToPage(new MallPageView(Frame, mallPageViewModel, menuPageViewModel, NavigateService));
                 }
                 else
                 {
