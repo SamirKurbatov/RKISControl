@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RKISControl.Data;
+using RKISControl.Services;
 using RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
@@ -28,11 +29,11 @@ namespace RKISControl
             RegisterComponents();
 
             serviceProvider = services.BuildServiceProvider();
-            
-            viewModelLocator = new ViewModelLocator(serviceProvider, frame);
+
+            viewModelLocator = new ViewModelLocator(serviceProvider);
 
             pageNavigationService = serviceProvider.GetRequiredService<PageNavigationService>();
-            
+
             pageNavigationService.NavigateToPage(new LoginPageView(viewModelLocator.LoginViewModel), viewModelLocator.LoginViewModel);
         }
 
@@ -48,6 +49,8 @@ namespace RKISControl
 
         private void RegisterServices()
         {
+            services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+            services.AddSingleton(p => new ViewModelFactory(serviceProvider, frame));
             services.AddSingleton<RentMallDataContext>();
             services.AddSingleton(provider => new PageNavigationService(frame));
             services.AddSingleton<INavigateService, PageNavigationService>();

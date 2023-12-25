@@ -100,20 +100,20 @@
     <Compile Include="Data\Rent.cs" />
     <Compile Include="Data\Tenant.cs" />
     <Compile Include="Data\Worker.cs" />
-    <Compile Include="Services\IFactory.cs" />
+    <Compile Include="Services\Factory\IViewModelFactory.cs" />
     <Compile Include="Services\IValidatorService.cs" />
     <Compile Include="Services\NavigationValidatorService.cs" />
-    <Compile Include="Services\ViewModelFactory.cs" />
+    <Compile Include="Services\Factory\ViewModelFactory.cs" />
     <Compile Include="ViewModels\AddMallPageViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MallPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\PageNavigationService.cs" />
     <Compile Include="ViewModels\UpdateMallPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="ViewModels\WorkerService.cs" />
+    <Compile Include="Services\WorkerService.cs" />
     <Compile Include="Views\AddMallPageView.xaml.cs">
       <DependentUpon>AddMallPageView.xaml</DependentUpon>
     </Compile>

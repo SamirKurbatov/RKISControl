@@ -12,13 +12,13 @@ namespace RKISControl.ViewModels
     {
         private readonly IViewModelFactory viewModelFactory;
 
-        public ViewModelLocator(IServiceProvider provider, Frame frame)
+        public ViewModelLocator(IServiceProvider provider)
         {
-            viewModelFactory = new ViewModelFactory(provider, frame);
+            viewModelFactory = provider.GetRequiredService<ViewModelFactory>();
 
             MenuViewModel = viewModelFactory.CreateMenuPageViewModel();
-            AddMallPageViewModel = viewModelFactory.CreateAddMallPageViewModel(MallPageViewModel, MenuViewModel);
             MallPageViewModel = viewModelFactory.CreateMallPageViewModel(UpdateMallPageViewModel, AddMallPageViewModel, MenuViewModel);
+            AddMallPageViewModel = viewModelFactory.CreateAddMallPageViewModel(MallPageViewModel, MenuViewModel);
             UpdateMallPageViewModel = viewModelFactory.CreateUpdateMallPageViewModel(MallPageViewModel, MenuViewModel);
             LoginViewModel = viewModelFactory.CreateLoginViewModel(MallPageViewModel, MenuViewModel);
         }

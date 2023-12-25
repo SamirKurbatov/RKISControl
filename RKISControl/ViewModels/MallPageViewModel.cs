@@ -22,14 +22,14 @@ namespace RKISControl.ViewModels
 
         private readonly MenuViewModel menuPageViewModel;
 
-        public MallPageViewModel(Frame frame, 
-            RentMallDataContext dataContext, 
+        public MallPageViewModel(Frame frame,
+            RentMallDataContext dataContext,
             INavigateService navigateService,
-            UpdateMallPageViewModel updateMallPageViewModel, AddMallPageViewModel addMallPageViewModel, MenuViewModel menuPageViewModel) 
+            UpdateMallPageViewModel updateMallPageViewModel, AddMallPageViewModel addMallPageViewModel, MenuViewModel menuPageViewModel)
                 : base(frame, dataContext, navigateService)
         {
-            this.updateMallPageViewModel = updateMallPageViewModel;
-            this.addMallPageViewModel = addMallPageViewModel;
+            this.updateMallPageViewModel = new UpdateMallPageViewModel(frame, dataContext, navigateService, this, menuPageViewModel);
+            this.addMallPageViewModel = new AddMallPageViewModel(frame, dataContext, navigateService, this, menuPageViewModel);
             this.menuPageViewModel = menuPageViewModel;
 
             SelectedMall = new Mall();
@@ -57,7 +57,10 @@ namespace RKISControl.ViewModels
 
         private void AddMall()
         {
-            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, this, menuPageViewModel), addMallPageViewModel);
+            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, this, menuPageViewModel)
+            {
+                DataContext = addMallPageViewModel
+            });
         }
 
         private void RemoveMall()
@@ -82,7 +85,10 @@ namespace RKISControl.ViewModels
         {
             if (SelectedMall != null)
             {
-                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, this, menuPageViewModel), updateMallPageViewModel);
+                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, this, menuPageViewModel)
+                {
+                    DataContext = updateMallPageViewModel
+                });
             }
         }
     }

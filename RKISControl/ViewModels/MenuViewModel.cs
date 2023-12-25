@@ -42,7 +42,6 @@ namespace RKISControl.ViewModels
 
         private string lastName;
 
-   
         public string LastName
         {
             get => lastName;

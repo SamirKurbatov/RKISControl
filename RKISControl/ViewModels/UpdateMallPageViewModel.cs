@@ -134,7 +134,7 @@ namespace RKISControl.ViewModels
 
         private void Commit()
         {
-            if (Id > 0 && DataContext != null)
+            if (Id >= 0 && DataContext != null)
             {
                 var mallToUpdate = DataContext.Malls.FirstOrDefault(m => m.ID == Id);
 
