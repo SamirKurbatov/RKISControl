@@ -30,9 +30,9 @@ namespace RKISControl
 
             serviceProvider = services.BuildServiceProvider();
 
-            viewModelLocator = new ViewModelLocator(serviceProvider);
-
             pageNavigationService = serviceProvider.GetRequiredService<PageNavigationService>();
+
+            viewModelLocator = new ViewModelLocator(serviceProvider);
 
             pageNavigationService.NavigateToPage(new LoginPageView(viewModelLocator.LoginViewModel), viewModelLocator.LoginViewModel);
         }

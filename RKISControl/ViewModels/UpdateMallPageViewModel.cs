@@ -13,19 +13,15 @@ namespace RKISControl.ViewModels
 {
     public class UpdateMallPageViewModel : BaseViewModel
     {
-        private readonly MallPageViewModel mallPageViewModel;
-
-        private readonly MenuViewModel menuPageViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
         public UpdateMallPageViewModel(Frame frame, 
             RentMallDataContext dataContext, 
             INavigateService navigateService,
-            MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel) 
+            ViewModelLocator viewModelLocator) 
                 : base(frame, dataContext, navigateService)
         {
-            this.mallPageViewModel = mallPageViewModel;
-            this.menuPageViewModel = menuPageViewModel;
-
+            this.viewModelLocator = viewModelLocator;
             CommitCommand = new RelayCommand(Commit);
         }
 
@@ -153,7 +149,7 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    NavigateService.NavigateToPage(new MallPageView(Frame, mallPageViewModel, menuPageViewModel, NavigateService));
+                    NavigateService.NavigateToPage(new MallPageView(Frame, NavigateService, viewModelLocator));
                 }
                 else
                 {

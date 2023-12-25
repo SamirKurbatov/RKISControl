@@ -16,21 +16,15 @@ namespace RKISControl.ViewModels
 {
     public class MallPageViewModel : BaseViewModel
     {
-        private readonly UpdateMallPageViewModel updateMallPageViewModel;
-
-        private readonly AddMallPageViewModel addMallPageViewModel;
-
-        private readonly MenuViewModel menuPageViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
         public MallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
             INavigateService navigateService,
-            UpdateMallPageViewModel updateMallPageViewModel, AddMallPageViewModel addMallPageViewModel, MenuViewModel menuPageViewModel)
+            ViewModelLocator viewModelLocator)
                 : base(frame, dataContext, navigateService)
         {
-            this.updateMallPageViewModel = new UpdateMallPageViewModel(frame, dataContext, navigateService, this, menuPageViewModel);
-            this.addMallPageViewModel = new AddMallPageViewModel(frame, dataContext, navigateService, this, menuPageViewModel);
-            this.menuPageViewModel = menuPageViewModel;
+            this.viewModelLocator = viewModelLocator;
 
             SelectedMall = new Mall();
 
@@ -57,10 +51,7 @@ namespace RKISControl.ViewModels
 
         private void AddMall()
         {
-            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, this, menuPageViewModel)
-            {
-                DataContext = addMallPageViewModel
-            });
+            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, viewModelLocator), viewModelLocator.AddMallPageViewModel);
         }
 
         private void RemoveMall()
@@ -85,10 +76,8 @@ namespace RKISControl.ViewModels
         {
             if (SelectedMall != null)
             {
-                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, this, menuPageViewModel)
-                {
-                    DataContext = updateMallPageViewModel
-                });
+                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, viewModelLocator)
+                    , viewModelLocator.UpdateMallPageViewModel);
             }
         }
     }

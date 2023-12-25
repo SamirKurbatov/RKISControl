@@ -16,16 +16,14 @@ namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
-        private readonly MallPageViewModel mallPageViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
-        private readonly MenuViewModel menuPageViewModel;
-
-        public AddMallPageViewModel(Frame frame, 
-            RentMallDataContext dataContext, 
-            INavigateService navigateService, MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel) : base(frame, dataContext, navigateService)
+        public AddMallPageViewModel(Frame frame,
+            RentMallDataContext dataContext,
+            INavigateService navigateService, ViewModelLocator viewModelLocator) : base(frame, dataContext, navigateService)
         {
-            this.mallPageViewModel = mallPageViewModel;
-            this.menuPageViewModel = menuPageViewModel;
+            this.viewModelLocator = viewModelLocator;
+
             CommitCommand = new RelayCommand(Commit);
         }
 
@@ -149,7 +147,7 @@ namespace RKISControl.ViewModels
                     Image = PathImage
                 };
 
-                var malls = mallPageViewModel.Malls;
+                var malls = viewModelLocator.MallPageViewModel.Malls;
 
                 malls.Add(mall);
 
@@ -161,7 +159,7 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                NavigateService.NavigateToPage(new MallPageView(Frame, mallPageViewModel, menuPageViewModel, NavigateService));
+                NavigateService.NavigateToPage(new MallPageView(Frame, NavigateService, viewModelLocator));
             }
             catch (Exception ex)
             {

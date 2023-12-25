@@ -15,12 +15,15 @@ namespace RKISControl.ViewModels
         public ViewModelLocator(IServiceProvider provider)
         {
             viewModelFactory = provider.GetRequiredService<ViewModelFactory>();
+            var db = provider.GetRequiredService<RentMallDataContext>();
+            
+            WorkerService = new WorkerService(db);
 
             MenuViewModel = viewModelFactory.CreateMenuPageViewModel();
-            MallPageViewModel = viewModelFactory.CreateMallPageViewModel(UpdateMallPageViewModel, AddMallPageViewModel, MenuViewModel);
-            AddMallPageViewModel = viewModelFactory.CreateAddMallPageViewModel(MallPageViewModel, MenuViewModel);
-            UpdateMallPageViewModel = viewModelFactory.CreateUpdateMallPageViewModel(MallPageViewModel, MenuViewModel);
-            LoginViewModel = viewModelFactory.CreateLoginViewModel(MallPageViewModel, MenuViewModel);
+            MallPageViewModel = viewModelFactory.CreateMallPageViewModel(this);
+            AddMallPageViewModel = viewModelFactory.CreateAddMallPageViewModel(this);
+            UpdateMallPageViewModel = viewModelFactory.CreateUpdateMallPageViewModel(this);
+            LoginViewModel = viewModelFactory.CreateLoginViewModel(this);
         }
 
         public LoginViewModel LoginViewModel { get; }
@@ -32,5 +35,7 @@ namespace RKISControl.ViewModels
         public UpdateMallPageViewModel UpdateMallPageViewModel { get; }
 
         public MenuViewModel MenuViewModel { get; }
+
+        public WorkerService WorkerService { get; }
     }
 }

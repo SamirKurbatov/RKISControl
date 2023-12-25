@@ -29,23 +29,21 @@ namespace RKISControl.Services
             navigationService = _provider.GetRequiredService<PageNavigationService>();
         }
 
-        public AddMallPageViewModel CreateAddMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel)
+        public AddMallPageViewModel CreateAddMallPageViewModel(ViewModelLocator locator)
         {
             return new AddMallPageViewModel(_frame, dataContext,
                 navigationService,
-                mallPageViewModel, menuPageViewModel);
+                locator);
         }
 
-        public LoginViewModel CreateLoginViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuPageViewModel)
+        public LoginViewModel CreateLoginViewModel(ViewModelLocator locator)
         {
-            var workerService = new WorkerService(dataContext);
-
-            return new LoginViewModel(_frame, dataContext, navigationService, workerService, mallPageViewModel, menuPageViewModel);
+            return new LoginViewModel(_frame, dataContext, navigationService, locator);
         }
 
-        public MallPageViewModel CreateMallPageViewModel(UpdateMallPageViewModel updateMallPageViewModel, AddMallPageViewModel addMallPageViewModel, MenuViewModel menuViewModel)
+        public MallPageViewModel CreateMallPageViewModel(ViewModelLocator locator)
         {
-            return new MallPageViewModel(_frame, dataContext, navigationService, updateMallPageViewModel, addMallPageViewModel, menuViewModel);
+            return new MallPageViewModel(_frame, dataContext, navigationService, locator);
         }
 
         public MenuViewModel CreateMenuPageViewModel()
@@ -53,9 +51,9 @@ namespace RKISControl.Services
             return new MenuViewModel();
         }
 
-        public UpdateMallPageViewModel CreateUpdateMallPageViewModel(MallPageViewModel mallPageViewModel, MenuViewModel menuViewModel)
+        public UpdateMallPageViewModel CreateUpdateMallPageViewModel(ViewModelLocator locator)
         {
-            return new UpdateMallPageViewModel(_frame, dataContext, navigationService, mallPageViewModel, menuViewModel);
+            return new UpdateMallPageViewModel(_frame, dataContext,navigationService, locator);
         }
     }
 }

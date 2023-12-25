@@ -14,20 +14,14 @@ namespace RKISControl.ViewModels
     {
         private readonly IValidatorService validatorService;
 
-        private readonly MenuViewModel menuViewModel;
-
-        private readonly MallPageViewModel mallPageViewModel;
-
-        private readonly WorkerService workerViewModel;
+        private readonly ViewModelLocator viewModelLocator;
 
         public LoginViewModel(Frame frame, 
             RentMallDataContext dataContext, 
             INavigateService navigateService,
-            WorkerService workerViewModel, MallPageViewModel mallPageViewModel, MenuViewModel menuViewModel) : base(frame, dataContext, navigateService)
+            ViewModelLocator viewModelLocator) : base(frame, dataContext, navigateService)
         {
-            this.workerViewModel = workerViewModel;
-            this.mallPageViewModel = mallPageViewModel;
-            this.menuViewModel = menuViewModel;
+            this.viewModelLocator = viewModelLocator;
 
             validatorService = new NavigationValidatorService();
 
@@ -64,7 +58,7 @@ namespace RKISControl.ViewModels
 
         private void ShowAccountWindow()
         {
-            var worker = workerViewModel.GetWorker(Login, Password);
+            var worker = viewModelLocator.WorkerService.GetWorker(Login, Password);
 
             var adminValidation = validatorService.Validate("Администратор", worker.Role);
             var managerAValidation = validatorService.Validate("Менеджер А", worker.Role);
@@ -73,9 +67,9 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                NavigateService.NavigateToPage(new ManagerPageMenuView(Frame, menuViewModel, mallPageViewModel, NavigateService)
+                NavigateService.NavigateToPage(new ManagerPageMenuView(Frame, NavigateService, viewModelLocator)
                 {
-                    DataContext = menuViewModel
+                    DataContext = viewModelLocator.MenuViewModel
                 });
             }
             else
@@ -86,6 +80,8 @@ namespace RKISControl.ViewModels
 
         private void SetValues(Worker worker)
         {
+            var menuViewModel = viewModelLocator.MenuViewModel;
+            
             menuViewModel.FirstName = worker.First_Name;
             menuViewModel.SecondName = worker.Second_Name;
             menuViewModel.LastName = worker.Middle_Name;
