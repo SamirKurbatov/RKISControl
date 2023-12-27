@@ -1,6 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using CommunityToolkit.Mvvm.Input;
 using RKISControl.Data;
 using RKISControl.Services;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
 using System.Data.Entity;
@@ -14,14 +15,14 @@ namespace RKISControl.ViewModels
     {
         private readonly IValidatorService validatorService;
 
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly PageViewLocator pageViewLocator;
 
-        public LoginViewModel(Frame frame, 
-            RentMallDataContext dataContext, 
+        public LoginViewModel(Frame frame,
+            RentMallDataContext dataContext,
             INavigateService navigateService,
-            ViewModelLocator viewModelLocator) : base(frame, dataContext, navigateService)
+            PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.pageViewLocator = pageViewLocator;
 
             validatorService = new NavigationValidatorService();
 
@@ -58,7 +59,9 @@ namespace RKISControl.ViewModels
 
         private void ShowAccountWindow()
         {
-            var worker = viewModelLocator.WorkerService.GetWorker(Login, Password);
+            var workerService = new WorkerService(DataContext);
+
+            var worker = workerService.GetWorker(Login, Password);
 
             var adminValidation = validatorService.Validate("Администратор", worker.Role);
             var managerAValidation = validatorService.Validate("Менеджер А", worker.Role);
@@ -67,10 +70,7 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                NavigateService.NavigateToPage(new ManagerPageMenuView(Frame, NavigateService, viewModelLocator)
-                {
-                    DataContext = viewModelLocator.MenuViewModel
-                });
+                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView);
             }
             else
             {
@@ -80,8 +80,8 @@ namespace RKISControl.ViewModels
 
         private void SetValues(Worker worker)
         {
-            var menuViewModel = viewModelLocator.MenuViewModel;
-            
+            var menuViewModel = pageViewLocator.MenuPageView.DataContext as MenuViewModel;
+
             menuViewModel.FirstName = worker.First_Name;
             menuViewModel.SecondName = worker.Second_Name;
             menuViewModel.LastName = worker.Middle_Name;

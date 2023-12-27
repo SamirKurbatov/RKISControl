@@ -1,4 +1,5 @@
 ﻿using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,24 +22,18 @@ namespace RKISControl.Views
     /// </summary>
     public partial class UpdateMenuPageView : Page
     {
-        private readonly Frame frame;
+        private readonly PageViewLocator pageViewLocator;
 
-        private readonly ViewModelLocator viewModelLocator;
-
-        private readonly INavigateService navigationService;
-
-        public UpdateMenuPageView(Frame frame, INavigateService navigationService, ViewModelLocator viewModelLocator)
+        public UpdateMenuPageView(PageViewLocator pageViewLocator)
         {
             InitializeComponent();
 
-            this.frame = frame;
-            this.navigationService = navigationService;
-            this.viewModelLocator = viewModelLocator;
+            this.pageViewLocator = pageViewLocator;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            navigationService.NavigateToPage(new MallPageView(frame, navigationService, viewModelLocator), viewModelLocator.MallPageViewModel);
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView);
         }
     }
 }

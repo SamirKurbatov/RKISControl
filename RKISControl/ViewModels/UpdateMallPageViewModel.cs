@@ -1,27 +1,24 @@
 ﻿using RKISControl.Data;
-using RKISControl.Views;
-using System.Data.Entity;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
-using System;
-using GalaSoft.MvvmLight.Command;
 using System.Linq;
-using System.Windows.Navigation;
+using RKISControl.ViewModels.RKISControl.ViewModels;
+using CommunityToolkit.Mvvm.Input;
 
 namespace RKISControl.ViewModels
 {
     public class UpdateMallPageViewModel : BaseViewModel
     {
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly PageViewLocator pageViewLocator;
 
-        public UpdateMallPageViewModel(Frame frame, 
-            RentMallDataContext dataContext, 
+        public UpdateMallPageViewModel(Frame frame,
+            RentMallDataContext dataContext,
             INavigateService navigateService,
-            ViewModelLocator viewModelLocator) 
+            PageViewLocator pageViewLocator)
                 : base(frame, dataContext, navigateService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.pageViewLocator = pageViewLocator;
             CommitCommand = new RelayCommand(Commit);
         }
 
@@ -149,7 +146,7 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    NavigateService.NavigateToPage(new MallPageView(Frame, NavigateService, viewModelLocator));
+                    NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView);
                 }
                 else
                 {

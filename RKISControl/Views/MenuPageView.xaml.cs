@@ -1,5 +1,6 @@
 ﻿using RKISControl.Data;
 using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,28 +23,21 @@ namespace RKISControl.Views
     /// </summary>
     public partial class MenuPageView : Page
     {
-        private readonly Frame frame;
+        private readonly PageViewLocator pageViewLocator;
 
-        private readonly LoginViewModel loginViewModel;
-
-        private readonly INavigateService navigationService;
-
-        public MenuPageView(Frame frame, LoginViewModel loginViewModel, INavigateService navigationService)
+        public MenuPageView(PageViewLocator pageViewLocator)
         {
-            InitializeComponent();
-            this.frame = frame;
-            this.loginViewModel = loginViewModel;
-            this.navigationService = navigationService;
+            this.pageViewLocator = pageViewLocator;
         }
 
         private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
         {
-            navigationService.NavigateToPage(new TenantsPageView(frame, loginViewModel));
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.TenantsPageView);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            navigationService.NavigateToPage(new LoginPageView(loginViewModel));
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView);
         }
     }
 }

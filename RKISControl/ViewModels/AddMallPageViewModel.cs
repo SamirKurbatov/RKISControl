@@ -1,28 +1,23 @@
 ﻿using RKISControl.Data;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Windows.Media;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System;
-using System.Data.Entity;
 using System.Windows.Controls;
-using RKISControl.Views;
-using System.Windows.Navigation;
+using RKISControl.ViewModels.RKISControl.ViewModels;
+using CommunityToolkit.Mvvm.Input;
+using System.Data.Entity;
 
 namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly PageViewLocator pageViewLocator;
 
         public AddMallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
-            INavigateService navigateService, ViewModelLocator viewModelLocator) : base(frame, dataContext, navigateService)
+            INavigateService navigateService, PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.pageViewLocator = pageViewLocator;
 
             CommitCommand = new RelayCommand(Commit);
         }
@@ -147,7 +142,7 @@ namespace RKISControl.ViewModels
                     Image = PathImage
                 };
 
-                var malls = viewModelLocator.MallPageViewModel.Malls;
+                var malls = DataContext.Malls;
 
                 malls.Add(mall);
 
@@ -159,7 +154,7 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                NavigateService.NavigateToPage(new MallPageView(Frame, NavigateService, viewModelLocator));
+                NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView);
             }
             catch (Exception ex)
             {

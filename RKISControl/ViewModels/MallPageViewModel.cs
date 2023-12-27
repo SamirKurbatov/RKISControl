@@ -1,5 +1,6 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using CommunityToolkit.Mvvm.Input;
 using RKISControl.Data;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
 using System.Collections.Generic;
@@ -16,22 +17,22 @@ namespace RKISControl.ViewModels
 {
     public class MallPageViewModel : BaseViewModel
     {
-        private readonly ViewModelLocator viewModelLocator;
+        private readonly PageViewLocator pageViewLocator;
 
         public MallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
             INavigateService navigateService,
-            ViewModelLocator viewModelLocator)
+            PageViewLocator pageViewLocator)
                 : base(frame, dataContext, navigateService)
         {
-            this.viewModelLocator = viewModelLocator;
+            this.pageViewLocator = pageViewLocator;
 
             SelectedMall = new Mall();
 
 
-            OpenAddPageCommand = new RelayCommand(AddMall);
+            OpenAddPageCommand = new RelayCommand(OpenAddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
-            OpenUpdatePageCommand = new RelayCommand(ChangeMall);
+            OpenUpdatePageCommand = new RelayCommand(OpenChangeMall);
         }
 
         public ObservableCollection<Mall> Malls => GetMalls();
@@ -49,9 +50,9 @@ namespace RKISControl.ViewModels
 
         public ICommand OpenUpdatePageCommand { get; }
 
-        private void AddMall()
+        private void OpenAddMall()
         {
-            NavigateService.NavigateToPage(new AddMallPageView(Frame, NavigateService, viewModelLocator), viewModelLocator.AddMallPageViewModel);
+            NavigateService.NavigateToPage(pageViewLocator.AddMallPageView);
         }
 
         private void RemoveMall()
@@ -72,12 +73,11 @@ namespace RKISControl.ViewModels
             }
         }
 
-        private void ChangeMall()
+        private void OpenChangeMall()
         {
             if (SelectedMall != null)
             {
-                NavigateService.NavigateToPage(new UpdateMenuPageView(Frame, NavigateService, viewModelLocator)
-                    , viewModelLocator.UpdateMallPageViewModel);
+                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.UpdateMenuPageView);
             }
         }
     }

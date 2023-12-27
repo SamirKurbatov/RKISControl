@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RKISControl.Data;
 using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
 using System.Collections.Generic;
@@ -29,19 +30,19 @@ namespace RKISControl.Services
             navigationService = _provider.GetRequiredService<PageNavigationService>();
         }
 
-        public AddMallPageViewModel CreateAddMallPageViewModel(ViewModelLocator locator)
+        public AddMallPageViewModel CreateAddMallPageViewModel(PageViewLocator locator)
         {
             return new AddMallPageViewModel(_frame, dataContext,
                 navigationService,
                 locator);
         }
 
-        public LoginViewModel CreateLoginViewModel(ViewModelLocator locator)
+        public LoginViewModel CreateLoginViewModel(PageViewLocator locator)
         {
             return new LoginViewModel(_frame, dataContext, navigationService, locator);
         }
 
-        public MallPageViewModel CreateMallPageViewModel(ViewModelLocator locator)
+        public MallPageViewModel CreateMallPageViewModel(PageViewLocator locator)
         {
             return new MallPageViewModel(_frame, dataContext, navigationService, locator);
         }
@@ -51,9 +52,14 @@ namespace RKISControl.Services
             return new MenuViewModel();
         }
 
-        public UpdateMallPageViewModel CreateUpdateMallPageViewModel(ViewModelLocator locator)
+        public UpdateMallPageViewModel CreateUpdateMallPageViewModel(PageViewLocator locator)
         {
-            return new UpdateMallPageViewModel(_frame, dataContext,navigationService, locator);
+            return new UpdateMallPageViewModel(_frame, dataContext, navigationService, locator);
+        }
+
+        public WorkerService CreateWorkerService()
+        {
+            return new WorkerService(dataContext);
         }
     }
 }

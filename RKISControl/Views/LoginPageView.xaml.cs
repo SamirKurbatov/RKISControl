@@ -1,5 +1,6 @@
 ﻿using RKISControl.Data;
 using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,25 +23,23 @@ namespace RKISControl.Views
     /// </summary>
     public partial class LoginPageView : Page
     {
-        private readonly LoginViewModel loginViewModel;
+        private readonly PageViewLocator pageViewLocator;
 
-        public LoginPageView(LoginViewModel loginViewModel)
+        public LoginPageView(PageViewLocator pageViewLocator)
         {
             InitializeComponent();
 
-            this.loginViewModel = loginViewModel;
-
-            DataContext = loginViewModel;
+            this.pageViewLocator = pageViewLocator;
         }
 
-        private void password_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var passwordBox = sender as PasswordBox;
-            if (passwordBox != null)
-            {
-                string newPassword = passwordBox.Password;
-                loginViewModel.Password = newPassword;
-            }
-        }
+        //private void password_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    var passwordBox = sender as PasswordBox;
+        //    if (passwordBox != null)
+        //    {
+        //        string newPassword = passwordBox.Password;
+        //        loginViewModel.Password = newPassword;
+        //    }
+        //}
     }
 }

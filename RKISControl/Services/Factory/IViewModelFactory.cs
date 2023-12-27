@@ -1,6 +1,6 @@
-﻿using GalaSoft.MvvmLight.Views;
-using RKISControl.Data;
+﻿using RKISControl.Data;
 using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +13,16 @@ namespace RKISControl.Services
 {
     public interface IViewModelFactory
     {
-        AddMallPageViewModel CreateAddMallPageViewModel(ViewModelLocator locator);
+        AddMallPageViewModel CreateAddMallPageViewModel(PageViewLocator locator);
 
-        LoginViewModel CreateLoginViewModel(ViewModelLocator locator);
+        LoginViewModel CreateLoginViewModel(PageViewLocator locator);
 
-        MallPageViewModel CreateMallPageViewModel(ViewModelLocator locator);
+        MallPageViewModel CreateMallPageViewModel(PageViewLocator locator);
 
         MenuViewModel CreateMenuPageViewModel();
 
-        UpdateMallPageViewModel CreateUpdateMallPageViewModel(ViewModelLocator locator);
+        UpdateMallPageViewModel CreateUpdateMallPageViewModel(PageViewLocator locator);
+
+        WorkerService CreateWorkerService();
     }
 }
