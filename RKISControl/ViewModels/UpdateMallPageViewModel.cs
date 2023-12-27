@@ -146,7 +146,7 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView);
+                    NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
                 }
                 else
                 {

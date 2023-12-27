@@ -154,7 +154,7 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView);
+                NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
             }
             catch (Exception ex)
             {

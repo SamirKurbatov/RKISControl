@@ -52,7 +52,7 @@ namespace RKISControl.ViewModels
 
         private void OpenAddMall()
         {
-            NavigateService.NavigateToPage(pageViewLocator.AddMallPageView);
+            NavigateService.NavigateToPage(pageViewLocator.AddMallPageView, pageViewLocator.AddMallPageView.DataContext as AddMallPageViewModel);
         }
 
         private void RemoveMall()
@@ -77,7 +77,7 @@ namespace RKISControl.ViewModels
         {
             if (SelectedMall != null)
             {
-                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.UpdateMenuPageView);
+                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.UpdateMenuPageView, pageViewLocator.UpdateMenuPageView.DataContext as UpdateMallPageViewModel);
             }
         }
     }

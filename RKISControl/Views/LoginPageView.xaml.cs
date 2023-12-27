@@ -32,14 +32,16 @@ namespace RKISControl.Views
             this.pageViewLocator = pageViewLocator;
         }
 
-        //private void password_PasswordChanged(object sender, RoutedEventArgs e)
-        //{
-        //    var passwordBox = sender as PasswordBox;
-        //    if (passwordBox != null)
-        //    {
-        //        string newPassword = passwordBox.Password;
-        //        loginViewModel.Password = newPassword;
-        //    }
-        //}
+        private void password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var typeOfPageViewModel = pageViewLocator.LoginPageView.DataContext as LoginViewModel;
+            var passwordBox = sender as PasswordBox;
+
+            if (passwordBox != null)
+            {
+                string newPassword = passwordBox.Password;
+                typeOfPageViewModel.Password = newPassword;
+            }
+        }
     }
 }

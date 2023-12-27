@@ -22,8 +22,9 @@ namespace RKISControl.ViewModels
             frame.Navigate(view);
         }
 
-        public void NavigateToPage(Page view)
+        public void NavigateToPage(Page view, MenuViewModel menuViewModel = null)
         {
+            view.DataContext = menuViewModel;
             frame.Navigate(view);
         }
 

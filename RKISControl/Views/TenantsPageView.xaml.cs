@@ -33,7 +33,7 @@ namespace RKISControl.Views
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MenuPageView);
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MenuPageView, pageViewLocator.MenuPageView.DataContext as MenuViewModel);
         }
     }
 }

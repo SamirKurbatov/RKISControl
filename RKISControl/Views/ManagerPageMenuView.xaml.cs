@@ -1,4 +1,5 @@
-﻿using RKISControl.ViewModels.RKISControl.ViewModels;
+﻿using RKISControl.ViewModels;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,12 +21,14 @@ namespace RKISControl.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MenuPageView);
+            var mallPageViewModel = pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel;
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, mallPageViewModel);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView);
+            var loginViewModel = pageViewLocator.LoginPageView.DataContext as LoginViewModel;
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView, loginViewModel);
         }
     }
 }

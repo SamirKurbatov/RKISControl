@@ -32,12 +32,14 @@ namespace RKISControl.Views
 
         private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.TenantsPageView);
+            var tenantsPageViewModel = pageViewLocator.TenantsPageView.DataContext as TenantsPageViewModel;
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.TenantsPageView, tenantsPageViewModel);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView);
+            var loginPageViewModel = pageViewLocator.LoginPageView.DataContext as LoginViewModel;
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView, loginPageViewModel);
         }
     }
 }

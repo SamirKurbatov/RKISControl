@@ -21,7 +21,7 @@ namespace RKISControl.Views
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView);
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MenuViewModel);
         }
     }
 }

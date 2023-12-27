@@ -43,7 +43,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock VerticalAlignment="Center" FontSize="15"  Grid.Column="0" Text="Пароль" Margin="25 0"/>
-                <PasswordBox x:Name="password" 
+                <PasswordBox PasswordChanged="password_PasswordChanged" x:Name="password" 
                     Style="{StaticResource RoundedPasswordBox}"  Grid.Column="1" Margin="20 5"/>
             </Grid>
 

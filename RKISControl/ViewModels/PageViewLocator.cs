@@ -45,6 +45,9 @@ namespace RKISControl.ViewModels
 
             public TenantsPageView TenantsPageView { get; private set; }
 
+            public MenuViewModel MenuViewContextModel
+                => MenuPageView.DataContext as MenuViewModel;
+
             private void InitializeViews()
             {
                 LoginPageView = PageFactory.CreateLoginView(this);
@@ -65,6 +68,7 @@ namespace RKISControl.ViewModels
                 UpdateMenuPageView = PageFactory.CreateUpdateMenuPage(this);
                 UpdateMenuPageView.DataContext = viewModelFactory.CreateUpdateMallPageViewModel(this);
             }
+
         }
     }
 

@@ -70,7 +70,7 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView);
+                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView, pageViewLocator.MenuViewContextModel);
             }
             else
             {

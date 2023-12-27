@@ -5,7 +5,7 @@ namespace RKISControl.ViewModels
 {
     public interface INavigateService
     {
-        void NavigateToPage(Page view);
+        void NavigateToPage(Page view, MenuViewModel menuViewModel);
         void NavigateToPage(Page view, BaseViewModel viewModel);
     }
 }
