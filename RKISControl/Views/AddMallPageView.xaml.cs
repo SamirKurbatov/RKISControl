@@ -20,20 +20,11 @@ namespace RKISControl.Views
     /// <summary>
     /// Логика взаимодействия для AddMallPageView.xaml
     /// </summary>
-    public partial class AddMallPageView : Page
+    public partial class AddMallPageView
     {
-        private readonly PageViewLocator pageViewLocator;
-
-        public AddMallPageView(PageViewLocator pageViewLocator)
+        public AddMallPageView()
         {
             InitializeComponent();
-
-            this.pageViewLocator = pageViewLocator;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
         }
     }
 }

@@ -11,15 +11,12 @@ namespace RKISControl.ViewModels
 {
     public class AddMallPageViewModel : BaseViewModel
     {
-        private readonly PageViewLocator pageViewLocator;
-
         public AddMallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
-            INavigateService navigateService, PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService)
+            INavigateService navigateService, PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            this.pageViewLocator = pageViewLocator;
-
             CommitCommand = new RelayCommand(Commit);
+            BackCommand = new RelayCommand(Back);
         }
 
         #region Properties
@@ -125,6 +122,8 @@ namespace RKISControl.ViewModels
 
         public ICommand CommitCommand { get; set; }
 
+        public ICommand BackCommand { get; set; }
+
         private void Commit()
         {
             try
@@ -154,12 +153,17 @@ namespace RKISControl.ViewModels
 
                 MessageBox.Show("Данные добавлены!");
 
-                NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
+                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
+        }
+
+        private void Back()
+        {
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
         }
     }
 }

@@ -51,7 +51,7 @@
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{DynamicResource BlueRoundedButton}" Content="Применить" Height="35" Width="120" Margin="10 0" Command="{Binding CommitCommand}"/>
-            <Button Style="{DynamicResource BlueRoundedButton}" Content="Отменить" Height="35" Width="120" Click="Button_Click"/>
+            <Button Style="{DynamicResource BlueRoundedButton}" Content="Отменить" Height="35" Width="120" Command="{Binding BackCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

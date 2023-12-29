@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:RKISControl.Views"
+      xmlns:local="clr-namespace:RKISControl.Views" xmlns:viewmodels="clr-namespace:RKISControl.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UpdateMallPageViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UpdateMenuPageView">
@@ -52,7 +52,7 @@
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{DynamicResource BlueRoundedButton}" Content="Применить" Height="35" Width="120" Margin="10 0" Command="{Binding CommitCommand}"/>
-            <Button Style="{DynamicResource BlueRoundedButton}" Content="Отменить" Height="35" Width="120" Click="Button_Click"/>
+            <Button Style="{DynamicResource BlueRoundedButton}" Content="Отменить" Height="35" Width="120" Command="{Binding BackToMallMenuCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

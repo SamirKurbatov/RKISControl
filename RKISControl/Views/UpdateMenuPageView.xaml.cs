@@ -22,18 +22,9 @@ namespace RKISControl.Views
     /// </summary>
     public partial class UpdateMenuPageView : Page
     {
-        private readonly PageViewLocator pageViewLocator;
-
-        public UpdateMenuPageView(PageViewLocator pageViewLocator)
+        public UpdateMenuPageView()
         {
             InitializeComponent();
-
-            this.pageViewLocator = pageViewLocator;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
         }
     }
 }

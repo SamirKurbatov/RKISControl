@@ -1,4 +1,5 @@
 ﻿using RKISControl.Data;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,18 +9,23 @@ namespace RKISControl.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        protected Frame Frame { get; }
-        
-        protected RentMallDataContext DataContext { get; }
-       
-        protected INavigateService NavigateService { get; }
+        public Frame Frame { get; set; }
 
-        public BaseViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService)
+        public RentMallDataContext DataContext { get; set; }
+
+        public INavigateService NavigateService { get; set; }
+
+        public PageViewLocator PageViewLocator { get; set; }
+
+        public BaseViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator)
         {
             Frame = frame ?? throw new ArgumentNullException(nameof(frame));
             DataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
             NavigateService = navigateService ?? throw new ArgumentNullException(nameof(navigateService));
+            PageViewLocator = pageViewLocator ?? throw new ArgumentNullException(nameof(pageViewLocator)); ;
         }
+
+        public BaseViewModel() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -15,15 +15,11 @@ namespace RKISControl.ViewModels
     {
         private readonly IValidatorService validatorService;
 
-        private readonly PageViewLocator pageViewLocator;
-
         public LoginViewModel(Frame frame,
             RentMallDataContext dataContext,
             INavigateService navigateService,
-            PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService)
+            PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            this.pageViewLocator = pageViewLocator;
-
             validatorService = new NavigationValidatorService();
 
             LoginCommand = new RelayCommand(ShowAccountWindow);
@@ -70,7 +66,7 @@ namespace RKISControl.ViewModels
             if (adminValidation || managerAValidation || managerCValidation)
             {
                 SetValues(worker);
-                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView, pageViewLocator.MenuViewContextModel);
+                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
             }
             else
             {
@@ -80,12 +76,17 @@ namespace RKISControl.ViewModels
 
         private void SetValues(Worker worker)
         {
-            var menuViewModel = pageViewLocator.MenuPageView.DataContext as MenuViewModel;
+            var menuViewModel = PageViewLocator.MenuPageView.DataContext as MenuViewModel;
 
             menuViewModel.FirstName = worker.First_Name;
             menuViewModel.SecondName = worker.Second_Name;
             menuViewModel.LastName = worker.Middle_Name;
             menuViewModel.Role = worker.Role;
+        }
+
+        public void HandlePasswordChanged(string newPassword)
+        {
+            Password = newPassword;
         }
     }
 }

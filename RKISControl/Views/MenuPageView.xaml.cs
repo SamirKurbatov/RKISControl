@@ -23,23 +23,9 @@ namespace RKISControl.Views
     /// </summary>
     public partial class MenuPageView : Page
     {
-        private readonly PageViewLocator pageViewLocator;
-
-        public MenuPageView(PageViewLocator pageViewLocator)
+        public MenuPageView()
         {
-            this.pageViewLocator = pageViewLocator;
-        }
-
-        private void OpenMallWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var tenantsPageViewModel = pageViewLocator.TenantsPageView.DataContext as TenantsPageViewModel;
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.TenantsPageView, tenantsPageViewModel);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var loginPageViewModel = pageViewLocator.LoginPageView.DataContext as LoginViewModel;
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView, loginPageViewModel);
+            InitializeComponent();
         }
     }
 }

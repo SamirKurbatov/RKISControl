@@ -1,4 +1,5 @@
 ﻿using RKISControl.Data;
+using RKISControl.ViewModels.RKISControl.ViewModels;
 using RKISControl.Views;
 using System;
 using System.Linq;
@@ -16,17 +17,9 @@ namespace RKISControl.ViewModels
             this.frame = frame;
         }
 
-        public void NavigateToPage(Page view, BaseViewModel viewModel)
+        public void NavigateToPage<T>(T page) where T : Page
         {
-            view.DataContext = viewModel;
-            frame.Navigate(view);
+            frame.Navigate(page);
         }
-
-        public void NavigateToPage(Page view, MenuViewModel menuViewModel = null)
-        {
-            view.DataContext = menuViewModel;
-            frame.Navigate(view);
-        }
-
     }
 }

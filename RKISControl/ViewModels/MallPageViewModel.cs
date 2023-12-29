@@ -17,23 +17,20 @@ namespace RKISControl.ViewModels
 {
     public class MallPageViewModel : BaseViewModel
     {
-        private readonly PageViewLocator pageViewLocator;
-
         public MallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
             INavigateService navigateService,
             PageViewLocator pageViewLocator)
-                : base(frame, dataContext, navigateService)
+                : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            this.pageViewLocator = pageViewLocator;
-
             SelectedMall = new Mall();
-
 
             OpenAddPageCommand = new RelayCommand(OpenAddMall);
             RemoveCommand = new RelayCommand(RemoveMall);
             OpenUpdatePageCommand = new RelayCommand(OpenChangeMall);
+            BackCommand = new RelayCommand(BackToLogin);
         }
+
 
         public ObservableCollection<Mall> Malls => GetMalls();
 
@@ -50,9 +47,16 @@ namespace RKISControl.ViewModels
 
         public ICommand OpenUpdatePageCommand { get; }
 
+        public ICommand BackCommand { get; set; }
+
+        private void BackToLogin()
+        {
+           PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.ManagerPageMenuView);
+        }
+
         private void OpenAddMall()
         {
-            NavigateService.NavigateToPage(pageViewLocator.AddMallPageView, pageViewLocator.AddMallPageView.DataContext as AddMallPageViewModel);
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.AddMallPageView);
         }
 
         private void RemoveMall()
@@ -77,7 +81,7 @@ namespace RKISControl.ViewModels
         {
             if (SelectedMall != null)
             {
-                pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.UpdateMenuPageView, pageViewLocator.UpdateMenuPageView.DataContext as UpdateMallPageViewModel);
+                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.UpdateMenuPageView);
             }
         }
     }

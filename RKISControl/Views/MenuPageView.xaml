@@ -25,7 +25,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Меню" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
-                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0" Click="Button_Click"/>
+                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0" Command="{Binding BackToLoginCommand}"/>
             </Grid>
 
             <Grid Grid.Row="1" Background="White" Margin="5">
@@ -39,7 +39,7 @@
                     <TextBlock Text="{Binding FullName}" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
                 </StackPanel>
                 <Button Grid.Column="1" Style="{StaticResource BlueRoundedButton}" Content="Показать Арендаторов"
-                        Click="OpenMallWindow_Click"
+                        Command="{Binding OpenTenantsWindowCommand}"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Height="50" />
                 <TextBlock Grid.Column="2" Text="{Binding Role}" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
             </Grid>

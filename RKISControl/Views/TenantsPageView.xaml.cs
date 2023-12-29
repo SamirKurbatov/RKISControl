@@ -22,18 +22,9 @@ namespace RKISControl.Views
     /// </summary>
     public partial class TenantsPageView : Page
     {
-        private readonly PageViewLocator pageViewLocator;
-
-        public TenantsPageView(PageViewLocator pageViewLocator)
+        public TenantsPageView()
         {
             InitializeComponent();
-
-            this.pageViewLocator = pageViewLocator;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MenuPageView, pageViewLocator.MenuPageView.DataContext as MenuViewModel);
         }
     }
 }

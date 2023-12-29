@@ -9,19 +9,11 @@ namespace RKISControl.Views
     /// <summary>
     /// Логика взаимодействия для MallPageView.xaml
     /// </summary>
-    public partial class MallPageView : Page
+    public partial class MallPageView
     {
-        private PageViewLocator pageViewLocator;
-
-        public MallPageView(PageViewLocator pageViewLocator)
+        public MallPageView()
         {
             InitializeComponent();
-            this.pageViewLocator = pageViewLocator;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.ManagerPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MenuViewModel);
         }
     }
 }

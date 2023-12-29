@@ -23,24 +23,26 @@ namespace RKISControl.Views
     /// </summary>
     public partial class LoginPageView : Page
     {
-        private readonly PageViewLocator pageViewLocator;
 
-        public LoginPageView(PageViewLocator pageViewLocator)
+        public LoginPageView()
         {
             InitializeComponent();
-
-            this.pageViewLocator = pageViewLocator;
         }
 
         private void password_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            var typeOfPageViewModel = pageViewLocator.LoginPageView.DataContext as LoginViewModel;
             var passwordBox = sender as PasswordBox;
+
+            var viewModel = DataContext as LoginViewModel;
 
             if (passwordBox != null)
             {
-                string newPassword = passwordBox.Password;
-                typeOfPageViewModel.Password = newPassword;
+                if (viewModel != null)
+                {
+                    string newPassword = passwordBox.Password;
+
+                    viewModel.HandlePasswordChanged(newPassword);
+                }
             }
         }
     }

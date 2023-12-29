@@ -25,7 +25,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Торговые центры" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
-                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0" Click="Close_Click"/>
+                <Button Style="{DynamicResource BlueRoundedButton}" Width="150" Height="50" Margin="10" Content="Выйти" Grid.Row="0" Grid.Column="0" Command="{Binding BackCommand}"/>
             </Grid>
 
             <Grid Grid.Row="1" Background="White" Margin="5">

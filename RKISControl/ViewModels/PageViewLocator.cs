@@ -16,13 +16,13 @@ namespace RKISControl.ViewModels
         {
             public INavigateService NavigateService { get; }
 
-            public IPageViewFactory PageFactory { get; }
+            private readonly IPageViewFactory pageFactory;
 
             private readonly IViewModelFactory viewModelFactory;
 
             public PageViewLocator(IServiceProvider serviceProvider)
             {
-                PageFactory = serviceProvider.GetRequiredService<PageViewFactory>();
+                pageFactory = serviceProvider.GetRequiredService<PageViewFactory>();
 
                 viewModelFactory = serviceProvider.GetRequiredService<ViewModelFactory>();
 
@@ -45,28 +45,14 @@ namespace RKISControl.ViewModels
 
             public TenantsPageView TenantsPageView { get; private set; }
 
-            public MenuViewModel MenuViewContextModel
-                => MenuPageView.DataContext as MenuViewModel;
-
             private void InitializeViews()
             {
-                LoginPageView = PageFactory.CreateLoginView(this);
-                LoginPageView.DataContext = viewModelFactory.CreateLoginViewModel(this);
-
-                MenuPageView = PageFactory.CreateMenuPageView(this);
-                MenuPageView.DataContext = viewModelFactory.CreateMenuPageViewModel();
-
-                ManagerPageMenuView = PageFactory.CreateManagerPageView(this);
-                ManagerPageMenuView.DataContext = viewModelFactory.CreateMenuPageViewModel();
-
-                MallPageMenuView = PageFactory.CreateMallPageView(this);
-                MallPageMenuView.DataContext = viewModelFactory.CreateMallPageViewModel(this);
-
-                AddMallPageView = PageFactory.CreateAddMallPageView(this);
-                AddMallPageView.DataContext = viewModelFactory.CreateAddMallPageViewModel(this);
-
-                UpdateMenuPageView = PageFactory.CreateUpdateMenuPage(this);
-                UpdateMenuPageView.DataContext = viewModelFactory.CreateUpdateMallPageViewModel(this);
+                LoginPageView = pageFactory.CreatePageView<LoginPageView, LoginViewModel>(this, viewModelFactory);
+                MenuPageView = pageFactory.CreatePageView<MenuPageView, MenuViewModel>(this, viewModelFactory);
+                ManagerPageMenuView = pageFactory.CreatePageView<ManagerPageMenuView, MenuViewModel>(this, viewModelFactory);
+                MallPageMenuView = pageFactory.CreatePageView<MallPageView, MallPageViewModel>(this, viewModelFactory);
+                AddMallPageView = pageFactory.CreatePageView<AddMallPageView, AddMallPageViewModel>(this, viewModelFactory);
+                UpdateMenuPageView = pageFactory.CreatePageView<UpdateMenuPageView, UpdateMallPageViewModel>(this, viewModelFactory);
             }
 
         }

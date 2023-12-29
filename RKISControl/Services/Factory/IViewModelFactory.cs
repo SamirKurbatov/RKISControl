@@ -13,16 +13,6 @@ namespace RKISControl.Services
 {
     public interface IViewModelFactory
     {
-        AddMallPageViewModel CreateAddMallPageViewModel(PageViewLocator locator);
-
-        LoginViewModel CreateLoginViewModel(PageViewLocator locator);
-
-        MallPageViewModel CreateMallPageViewModel(PageViewLocator locator);
-
-        MenuViewModel CreateMenuPageViewModel();
-
-        UpdateMallPageViewModel CreateUpdateMallPageViewModel(PageViewLocator locator);
-
-        WorkerService CreateWorkerService();
+        T CreateViewModel<T>(PageViewLocator pageViewLocator) where T : BaseViewModel;
     }
 }

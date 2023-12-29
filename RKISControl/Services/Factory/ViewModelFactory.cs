@@ -30,31 +30,11 @@ namespace RKISControl.Services
             navigationService = _provider.GetRequiredService<PageNavigationService>();
         }
 
-        public AddMallPageViewModel CreateAddMallPageViewModel(PageViewLocator locator)
+        public T CreateViewModel<T>(PageViewLocator pageViewLocator) where T : BaseViewModel
         {
-            return new AddMallPageViewModel(_frame, dataContext,
-                navigationService,
-                locator);
-        }
+            T viewModel = (T)Activator.CreateInstance(typeof(T), _frame, dataContext, navigationService, pageViewLocator);
 
-        public LoginViewModel CreateLoginViewModel(PageViewLocator locator)
-        {
-            return new LoginViewModel(_frame, dataContext, navigationService, locator);
-        }
-
-        public MallPageViewModel CreateMallPageViewModel(PageViewLocator locator)
-        {
-            return new MallPageViewModel(_frame, dataContext, navigationService, locator);
-        }
-
-        public MenuViewModel CreateMenuPageViewModel()
-        {
-            return new MenuViewModel();
-        }
-
-        public UpdateMallPageViewModel CreateUpdateMallPageViewModel(PageViewLocator locator)
-        {
-            return new UpdateMallPageViewModel(_frame, dataContext, navigationService, locator);
+            return viewModel;
         }
 
         public WorkerService CreateWorkerService()

@@ -30,9 +30,9 @@ namespace RKISControl
 
             serviceProvider = services.BuildServiceProvider();
 
-            pageViewLocator = new PageViewLocator(serviceProvider);
+            pageViewLocator = serviceProvider.GetRequiredService<PageViewLocator>();
 
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView, pageViewLocator.LoginPageView.DataContext as LoginViewModel);
+            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.LoginPageView);
         }
 
         private void RegisterViewModels()
@@ -47,6 +47,7 @@ namespace RKISControl
 
         private void RegisterServices()
         {
+            services.AddSingleton<PageViewLocator>();
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
             services.AddSingleton<IPageViewFactory, PageViewFactory>();
             services.AddSingleton(p => new ViewModelFactory(serviceProvider, frame));

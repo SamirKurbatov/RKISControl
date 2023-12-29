@@ -5,21 +5,20 @@ using System.Windows;
 using System.Linq;
 using RKISControl.ViewModels.RKISControl.ViewModels;
 using CommunityToolkit.Mvvm.Input;
+using System;
 
 namespace RKISControl.ViewModels
 {
     public class UpdateMallPageViewModel : BaseViewModel
     {
-        private readonly PageViewLocator pageViewLocator;
-
         public UpdateMallPageViewModel(Frame frame,
             RentMallDataContext dataContext,
             INavigateService navigateService,
             PageViewLocator pageViewLocator)
-                : base(frame, dataContext, navigateService)
+                : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            this.pageViewLocator = pageViewLocator;
             CommitCommand = new RelayCommand(Commit);
+            BackToMallMenuCommand = new RelayCommand(BackToMallMenu);
         }
 
         #region Properties
@@ -125,6 +124,13 @@ namespace RKISControl.ViewModels
 
         public ICommand CommitCommand { get; set; }
 
+        public ICommand BackToMallMenuCommand { get; set; }
+
+        private void BackToMallMenu()
+        {
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
+        }
+
         private void Commit()
         {
             if (Id >= 0 && DataContext != null)
@@ -146,7 +152,7 @@ namespace RKISControl.ViewModels
 
                     MessageBox.Show("Данные успешно обновлены! ");
 
-                    NavigateService.NavigateToPage(pageViewLocator.MallPageMenuView, pageViewLocator.MallPageMenuView.DataContext as MallPageViewModel);
+                    NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
                 }
                 else
                 {
