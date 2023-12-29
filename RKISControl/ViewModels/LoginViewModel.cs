@@ -64,12 +64,12 @@ namespace RKISControl.ViewModels
 
             if (adminValidation)
             {
-                SetValues(worker);
+                SetAdminValues(worker);
                 PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
             }
-            else if ( managerAValidation || managerCValidation)
+            else if (managerAValidation || managerCValidation)
             {
-                SetValues(worker);
+                SetManagerValues(worker);
                 PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.ManagerPageMenuView);
             }
             else
@@ -78,15 +78,28 @@ namespace RKISControl.ViewModels
             }
         }
 
-        private void SetValues(Worker worker)
+        private void SetAdminValues(Worker worker)
         {
             var viewModel = PageViewLocator.MenuPageView.DataContext as MenuViewModel;
 
             viewModel.FirstName = worker.First_Name;
             viewModel.SecondName = worker.Second_Name;
             viewModel.LastName = worker.Middle_Name;
+            viewModel.FullName = $"{worker.First_Name} {worker.Second_Name} {worker.Middle_Name}";
             viewModel.Role = worker.Role;
         }
+
+        private void SetManagerValues(Worker worker)
+        {
+            var viewModel = PageViewLocator.ManagerPageMenuView.DataContext as ManagerMenuViewModel;
+
+            viewModel.FirstName = worker.First_Name;
+            viewModel.SecondName = worker.Second_Name;
+            viewModel.LastName = worker.Middle_Name;
+            viewModel.FullName = $"{worker.First_Name} {worker.Second_Name} {worker.Middle_Name}";
+            viewModel.Role = worker.Role;
+        }
+
 
         public void HandlePasswordChanged(string newPassword)
         {

@@ -66,7 +66,17 @@ namespace RKISControl.ViewModels
             }
         }
 
-        public string FullName => $"{FirstName} {SecondName} {LastName}";
+        private string fullName;
+        public string FullName
+        {
+            get => fullName;
+            set
+            {
+                fullName = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         public ICommand OpenTenantsWindowCommand { get; set; }

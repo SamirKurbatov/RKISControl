@@ -114,6 +114,7 @@
     <Compile Include="Services\NavigationValidatorService.cs" />
     <Compile Include="Services\Factory\ViewModelFactory.cs" />
     <Compile Include="ViewModels\AddMallPageViewModel.cs" />
+    <Compile Include="ViewModels\AddTenantsViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -124,8 +125,12 @@
     <Compile Include="ViewModels\PageViewLocator.cs" />
     <Compile Include="ViewModels\UpdateMallPageViewModel.cs" />
     <Compile Include="Services\WorkerService.cs" />
+    <Compile Include="ViewModels\UpdateTenantsViewModel.cs" />
     <Compile Include="Views\AddMallPageView.xaml.cs">
       <DependentUpon>AddMallPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddTenantsPageView.xaml.cs">
+      <DependentUpon>AddTenantsPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPageView.xaml.cs">
       <DependentUpon>LoginPageView.xaml</DependentUpon>
@@ -142,9 +147,12 @@
     <Compile Include="Views\TenantsPageView.xaml.cs">
       <DependentUpon>TenantsPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\TenantsPageViewModel.cs" />
+    <Compile Include="ViewModels\TenantsViewModel.cs" />
     <Compile Include="Views\UpdateMenuPageView.xaml.cs">
       <DependentUpon>UpdateMenuPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateTenantsPageView.xaml.cs">
+      <DependentUpon>UpdateTenantsPageView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +167,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddMallPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddTenantsPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UpdateMenuPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateTenantsPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

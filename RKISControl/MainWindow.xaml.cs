@@ -42,8 +42,10 @@ namespace RKISControl
             services.AddSingleton<ManagerMenuViewModel>();
             services.AddSingleton<MallPageViewModel>();
             services.AddSingleton<AddMallPageViewModel>();
-            services.AddSingleton<TenantsPageViewModel>();
             services.AddSingleton<UpdateMallPageViewModel>();
+            services.AddSingleton<UpdateTenantsViewModel>();
+            services.AddSingleton<AddTenantsViewModel>();
+            services.AddSingleton<TenantsViewModel>();
             services.AddTransient<LoginViewModel>();
         }
 

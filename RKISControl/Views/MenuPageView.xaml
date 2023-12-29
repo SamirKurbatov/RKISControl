@@ -36,7 +36,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Добро пожаловать" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
-                    <TextBlock Text="{Binding FirstName}" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
+                    <TextBlock Text="{Binding FullName}" TextWrapping="Wrap" FontSize="24" Foreground="LightBlue"/>
                 </StackPanel>
                 <Button Grid.Column="1" Style="{StaticResource BlueRoundedButton}" Content="Показать Арендаторов"
                         Command="{Binding OpenTenantsWindowCommand}"

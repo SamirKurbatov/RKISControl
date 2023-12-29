@@ -45,11 +45,17 @@ namespace RKISControl.ViewModels
 
             public TenantsPageView TenantsPageView { get; private set; }
 
+            public AddTenantsPageView AddTenantsPageView { get; private set; }
+
+            public UpdateTenantsPageView UpdateTenantsPageView { get; private set; }
+
             private void InitializeViews()
             {
                 LoginPageView = pageFactory.CreatePageView<LoginPageView, LoginViewModel>(this, viewModelFactory);
                 MenuPageView = pageFactory.CreatePageView<MenuPageView, MenuViewModel>(this, viewModelFactory);
-                TenantsPageView = pageFactory.CreatePageView<TenantsPageView, TenantsPageViewModel>(this, viewModelFactory);
+                TenantsPageView = pageFactory.CreatePageView<TenantsPageView, TenantsViewModel>(this, viewModelFactory);
+                AddTenantsPageView = pageFactory.CreatePageView<AddTenantsPageView, AddTenantsViewModel>(this, viewModelFactory);
+                UpdateTenantsPageView = pageFactory.CreatePageView<UpdateTenantsPageView, UpdateTenantsViewModel>(this, viewModelFactory);
                 ManagerPageMenuView = pageFactory.CreatePageView<ManagerPageMenuView, ManagerMenuViewModel>(this, viewModelFactory);
                 MallPageMenuView = pageFactory.CreatePageView<MallPageView, MallPageViewModel>(this, viewModelFactory);
                 AddMallPageView = pageFactory.CreatePageView<AddMallPageView, AddMallPageViewModel>(this, viewModelFactory);
