@@ -49,7 +49,8 @@ namespace RKISControl.ViewModels
             {
                 LoginPageView = pageFactory.CreatePageView<LoginPageView, LoginViewModel>(this, viewModelFactory);
                 MenuPageView = pageFactory.CreatePageView<MenuPageView, MenuViewModel>(this, viewModelFactory);
-                ManagerPageMenuView = pageFactory.CreatePageView<ManagerPageMenuView, MenuViewModel>(this, viewModelFactory);
+                TenantsPageView = pageFactory.CreatePageView<TenantsPageView, TenantsPageViewModel>(this, viewModelFactory);
+                ManagerPageMenuView = pageFactory.CreatePageView<ManagerPageMenuView, ManagerMenuViewModel>(this, viewModelFactory);
                 MallPageMenuView = pageFactory.CreatePageView<MallPageView, MallPageViewModel>(this, viewModelFactory);
                 AddMallPageView = pageFactory.CreatePageView<AddMallPageView, AddMallPageViewModel>(this, viewModelFactory);
                 UpdateMenuPageView = pageFactory.CreatePageView<UpdateMenuPageView, UpdateMallPageViewModel>(this, viewModelFactory);

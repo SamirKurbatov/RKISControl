@@ -51,7 +51,7 @@ namespace RKISControl.ViewModels
 
         private void BackToLogin()
         {
-           PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.ManagerPageMenuView);
+           PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
         }
 
         private void OpenAddMall()

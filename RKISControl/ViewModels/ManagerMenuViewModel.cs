@@ -2,16 +2,18 @@
 using RKISControl.Data;
 using RKISControl.ViewModels.RKISControl.ViewModels;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace RKISControl.ViewModels
 {
-    public class MenuViewModel : BaseViewModel
+    public class ManagerMenuViewModel : BaseViewModel
     {
-        public MenuViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator) 
+        public ManagerMenuViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator) 
             : base(frame, dataContext, navigateService, pageViewLocator)
         {
             OpenTenantsWindowCommand = new RelayCommand(OpenTenantsWindow);
@@ -37,7 +39,7 @@ namespace RKISControl.ViewModels
             set
             {
                 firstName = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(FirstName));
             }
         }
 
@@ -48,7 +50,7 @@ namespace RKISControl.ViewModels
             set
             {
                 secondName = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SecondName));
             }
         }
 
@@ -60,7 +62,7 @@ namespace RKISControl.ViewModels
             set
             {
                 lastName = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(LastName));
             }
         }
 
@@ -73,7 +75,7 @@ namespace RKISControl.ViewModels
 
         private void OpenTenantsWindow()
         {
-            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.TenantsPageView);
         }
 
         private void BackToLogin()

@@ -10,8 +10,6 @@ namespace RKISControl.Views
 {
     public class TenantsPageViewModel : BaseViewModel
     {
-        private readonly PageViewLocator pageViewLocator;
-
         public TenantsPageViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator) 
             : base(frame, dataContext, navigateService, pageViewLocator)
         {
@@ -20,7 +18,7 @@ namespace RKISControl.Views
 
         private void BackToMenu()
         {
-            pageViewLocator.NavigateService.NavigateToPage(pageViewLocator.MenuPageView);
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.ManagerPageMenuView);
         }
 
         public ICommand BackToMenuCommand { get; set; }

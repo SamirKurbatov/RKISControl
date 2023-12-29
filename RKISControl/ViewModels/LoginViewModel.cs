@@ -33,7 +33,6 @@ namespace RKISControl.ViewModels
             get => login;
             set
             {
-
                 login = value;
                 OnPropertyChanged();
             }
@@ -63,10 +62,15 @@ namespace RKISControl.ViewModels
             var managerAValidation = validatorService.Validate("Менеджер А", worker.Role);
             var managerCValidation = validatorService.Validate("Менеджер С", worker.Role);
 
-            if (adminValidation || managerAValidation || managerCValidation)
+            if (adminValidation)
             {
                 SetValues(worker);
                 PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
+            }
+            else if ( managerAValidation || managerCValidation)
+            {
+                SetValues(worker);
+                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.ManagerPageMenuView);
             }
             else
             {
@@ -76,12 +80,12 @@ namespace RKISControl.ViewModels
 
         private void SetValues(Worker worker)
         {
-            var menuViewModel = PageViewLocator.MenuPageView.DataContext as MenuViewModel;
+            var viewModel = PageViewLocator.MenuPageView.DataContext as MenuViewModel;
 
-            menuViewModel.FirstName = worker.First_Name;
-            menuViewModel.SecondName = worker.Second_Name;
-            menuViewModel.LastName = worker.Middle_Name;
-            menuViewModel.Role = worker.Role;
+            viewModel.FirstName = worker.First_Name;
+            viewModel.SecondName = worker.Second_Name;
+            viewModel.LastName = worker.Middle_Name;
+            viewModel.Role = worker.Role;
         }
 
         public void HandlePasswordChanged(string newPassword)

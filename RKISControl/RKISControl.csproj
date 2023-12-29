@@ -118,6 +118,7 @@
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MallPageViewModel.cs" />
+    <Compile Include="ViewModels\ManagerMenuViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Services\PageNavigationService.cs" />
     <Compile Include="ViewModels\PageViewLocator.cs" />
