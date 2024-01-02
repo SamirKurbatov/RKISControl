@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using RKISControl.Commands;
 using RKISControl.Data;
 using RKISControl.ViewModels;
 using RKISControl.ViewModels.RKISControl.ViewModels;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,7 +16,7 @@ namespace RKISControl.Views
 {
     public class TenantsViewModel : BaseViewModel
     {
-        public TenantsViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator) 
+        public TenantsViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator)
             : base(frame, dataContext, navigateService, pageViewLocator)
         {
             SelectedTenant = new Tenant();
@@ -22,13 +24,21 @@ namespace RKISControl.Views
             OpenAddTenantsPageCommand = new RelayCommand(OpenAddTenants);
             OpenChangeTenantsPageCommand = new RelayCommand(OpenChangeTenants);
             BackToMenuCommand = new RelayCommand(BackToMenu);
-            RemoveTenantCommand = new RelayCommand(RemoveTenant);
+            RemoveTenantCommand = new RelayCommandAsync(RemoveTenant);
         }
 
         public Tenant SelectedTenant { get; set; }
 
-        public ObservableCollection<Tenant> Tenants => 
-            new ObservableCollection<Tenant>(DataContext.Tenants.Select(x => x));
+        private ObservableCollection<Tenant> tenants;
+        public ObservableCollection<Tenant> Tenants
+        {
+            get => tenants;
+            set
+            {
+                tenants = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand BackToMenuCommand { get; set; }
 
@@ -37,6 +47,12 @@ namespace RKISControl.Views
         public ICommand OpenChangeTenantsPageCommand { get; set; }
 
         public ICommand RemoveTenantCommand { get; set; }
+
+        public async Task LoadTenantsAsync()
+        {
+            var tenants = await DataContext.Tenants.Select(x => x).ToListAsync();
+            Tenants = new ObservableCollection<Tenant>(tenants);
+        }
 
         private void BackToMenu()
         {
@@ -53,17 +69,20 @@ namespace RKISControl.Views
             PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.UpdateTenantsPageView);
         }
 
-        private void RemoveTenant()
+        private async Task RemoveTenant()
         {
             if (SelectedTenant != null)
             {
-                Tenants.Remove(SelectedTenant);
-
                 DataContext.Tenants.Remove(SelectedTenant);
 
-                DataContext.SaveChanges();
+                Tenants.Remove(SelectedTenant);
 
-                OnPropertyChanged(nameof(Tenants));
+                await DataContext.SaveChangesAsync();
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    OnPropertyChanged(nameof(Tenants));
+                });
             }
             else
             {

@@ -9,13 +9,13 @@ namespace RKISControl.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public Frame Frame { get; set; }
+        protected Frame Frame { get; set; }
 
-        public RentMallDataContext DataContext { get; set; }
+        protected RentMallDataContext DataContext { get; set; }
 
-        public INavigateService NavigateService { get; set; }
+        protected INavigateService NavigateService { get; set; }
 
-        public PageViewLocator PageViewLocator { get; set; }
+        protected PageViewLocator PageViewLocator { get; set; }
 
         public BaseViewModel(Frame frame, RentMallDataContext dataContext, INavigateService navigateService, PageViewLocator pageViewLocator)
         {

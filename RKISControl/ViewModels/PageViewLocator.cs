@@ -20,13 +20,17 @@ namespace RKISControl.ViewModels
 
             private readonly IViewModelFactory viewModelFactory;
 
-            public PageViewLocator(IServiceProvider serviceProvider)
+            public PageViewLocator(
+                IPageViewFactory pageFactory,
+                IViewModelFactory viewModelFactory,
+                INavigateService navigateService)
             {
-                pageFactory = serviceProvider.GetRequiredService<PageViewFactory>();
+                
+                this.pageFactory = pageFactory;
 
-                viewModelFactory = serviceProvider.GetRequiredService<ViewModelFactory>();
+                this.viewModelFactory = viewModelFactory;
 
-                NavigateService = serviceProvider.GetRequiredService<PageNavigationService>();
+                NavigateService = navigateService;
 
                 InitializeViews();
             }

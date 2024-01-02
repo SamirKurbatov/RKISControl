@@ -6,6 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Linq;
+using RKISControl.Views;
+using System.Threading.Tasks;
+using RKISControl.Commands;
 
 namespace RKISControl.ViewModels
 {
@@ -15,7 +19,7 @@ namespace RKISControl.ViewModels
     RentMallDataContext dataContext,
     INavigateService navigateService, PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            CommitCommand = new RelayCommand(Commit);
+            CommitCommand = new RelayCommandAsync(Commit);
             BackCommand = new RelayCommand(Back);
         }
 
@@ -71,7 +75,7 @@ namespace RKISControl.ViewModels
 
         public ICommand BackCommand { get; set; }
 
-        private void Commit()
+        private async Task Commit()
         {
             try
             {
@@ -83,19 +87,28 @@ namespace RKISControl.ViewModels
                     Adress = Adress
                 };
 
-                var tenants = DataContext.Tenants;
+                if (DataContext.Tenants.Any(t => t.ID == Id))
+                {
+                    MessageBox.Show($"Арендатор с {Id} уже есть в списке!");
+                    Back();
+                }
+                else
+                {
+                    DataContext.Tenants.Add(tenant);
+                    DataContext.Entry(tenant).State = EntityState.Added;
+                    await DataContext.SaveChangesAsync();
 
-                tenants.Add(tenant);
-
-                OnPropertyChanged(nameof(tenants));
-
-                DataContext.Entry(tenant).State = EntityState.Added;
-
-                DataContext.SaveChanges();
-
-                MessageBox.Show("Данные добавлены!");
-
-                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.TenantsPageView);
+                    await Application.Current.Dispatcher.Invoke(async () =>
+                    {
+                        var tenantsViewModel = PageViewLocator.TenantsPageView.DataContext as TenantsViewModel;
+                        if (tenantsViewModel != null)
+                        {
+                            await tenantsViewModel.LoadTenantsAsync();
+                            MessageBox.Show("Данные обновлены!");
+                            Back();
+                        }
+                    });
+                }
             }
             catch (Exception ex)
             {

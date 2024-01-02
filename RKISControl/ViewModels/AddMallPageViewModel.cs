@@ -145,11 +145,13 @@ namespace RKISControl.ViewModels
 
                 malls.Add(mall);
 
-                OnPropertyChanged(nameof(malls));
+                DataContext.Malls.Add(mall);
 
                 DataContext.Entry(mall).State = EntityState.Added;
 
                 DataContext.SaveChanges();
+
+                OnPropertyChanged(nameof(malls));
 
                 MessageBox.Show("Данные добавлены!");
 

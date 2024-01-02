@@ -36,10 +36,5 @@ namespace RKISControl.Services
 
             return viewModel;
         }
-
-        public WorkerService CreateWorkerService()
-        {
-            return new WorkerService(dataContext);
-        }
     }
 }

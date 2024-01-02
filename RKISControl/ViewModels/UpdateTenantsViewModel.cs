@@ -96,7 +96,7 @@ namespace RKISControl.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show($"Торговый центр с {Id} не найден! ");
+                    MessageBox.Show($"Арендатор с {Id} не найден! ");
                 }
 
             }
