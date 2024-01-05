@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using RKISControl.Commands;
 using RKISControl.Data;
 using RKISControl.ViewModels.RKISControl.ViewModels;
 using RKISControl.Views;
@@ -26,19 +27,29 @@ namespace RKISControl.ViewModels
             SelectedMall = new Mall();
 
             OpenAddPageCommand = new RelayCommand(OpenAddMall);
-            RemoveCommand = new RelayCommand(RemoveMall);
+            RemoveCommand = new RelayCommandAsync(RemoveMall);
             OpenUpdatePageCommand = new RelayCommand(OpenChangeMall);
             BackCommand = new RelayCommand(BackToLogin);
         }
 
-
-        public ObservableCollection<Mall> Malls => GetMalls();
+        private ObservableCollection<Mall> malls;
+        public ObservableCollection<Mall> Malls
+        {
+            get => malls;
+            set
+            {
+                malls = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Mall SelectedMall { get; set; }
 
-        private ObservableCollection<Mall> GetMalls()
+
+        public async Task LoadMallsAsync()
         {
-            return new ObservableCollection<Mall>(DataContext.Malls.Select(m => m));
+            var malls = await DataContext.Malls.Select(x => x).ToListAsync();
+            Malls = new ObservableCollection<Mall>(malls);
         }
 
         public ICommand OpenAddPageCommand { get; }
@@ -51,7 +62,7 @@ namespace RKISControl.ViewModels
 
         private void BackToLogin()
         {
-           PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
+            PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MenuPageView);
         }
 
         private void OpenAddMall()
@@ -59,7 +70,7 @@ namespace RKISControl.ViewModels
             PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.AddMallPageView);
         }
 
-        private void RemoveMall()
+        private async Task RemoveMall()
         {
             if (SelectedMall != null)
             {
@@ -67,9 +78,12 @@ namespace RKISControl.ViewModels
 
                 DataContext.Malls.Remove(SelectedMall);
 
-                DataContext.SaveChanges();
+                await DataContext.SaveChangesAsync();
 
-                OnPropertyChanged(nameof(Malls));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    OnPropertyChanged(nameof(Malls));
+                });
             }
             else
             {

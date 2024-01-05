@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using RKISControl.ViewModels.RKISControl.ViewModels;
 using CommunityToolkit.Mvvm.Input;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using RKISControl.Commands;
 
 namespace RKISControl.ViewModels
 {
@@ -15,7 +17,7 @@ namespace RKISControl.ViewModels
             RentMallDataContext dataContext,
             INavigateService navigateService, PageViewLocator pageViewLocator) : base(frame, dataContext, navigateService, pageViewLocator)
         {
-            CommitCommand = new RelayCommand(Commit);
+            CommitCommand = new RelayCommandAsync(Commit);
             BackCommand = new RelayCommand(Back);
         }
 
@@ -124,7 +126,7 @@ namespace RKISControl.ViewModels
 
         public ICommand BackCommand { get; set; }
 
-        private void Commit()
+        private async Task Commit()
         {
             try
             {
@@ -141,21 +143,21 @@ namespace RKISControl.ViewModels
                     Image = PathImage
                 };
 
-                var malls = DataContext.Malls;
-
-                malls.Add(mall);
-
                 DataContext.Malls.Add(mall);
-
                 DataContext.Entry(mall).State = EntityState.Added;
+                await DataContext.SaveChangesAsync();
 
-                DataContext.SaveChanges();
+                await Application.Current.Dispatcher.Invoke(async () =>
+                 {
+                     var mallPageViewModel = PageViewLocator.MallPageMenuView.DataContext as MallPageViewModel;
 
-                OnPropertyChanged(nameof(malls));
-
-                MessageBox.Show("Данные добавлены!");
-
-                PageViewLocator.NavigateService.NavigateToPage(PageViewLocator.MallPageMenuView);
+                     if (mallPageViewModel != null)
+                     {
+                         await mallPageViewModel.LoadMallsAsync();
+                         MessageBox.Show("Данные обновлены!");
+                         Back();
+                     }
+                 });
             }
             catch (Exception ex)
             {
